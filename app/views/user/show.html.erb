@@ -1,0 +1,24 @@
+<% if @user.full_name.present? %>
+	<h3> <%= @user.full_name %> </h3>
+	<% if @user.avatar_url.present?%>
+           <%= image_tag(@user.avatar_url, class:"img-responsive img-circle",style:"width:150px;height:150px;margin:auto;")%>
+   	<% else %>
+           <%= image_tag('dog.jpg', class:"img-responsive img-circle", style:"width:150px;height:150px;margin:auto;") %>
+           <%end %>
+<%else %>
+	<h3> <%= @user.email + " non ha un nome associato"  %>  </h3> 
+	<%= image_tag('dog.jpg', class:"img-responsive img-circle", style:"width:150px;height:150px;margin:auto;") %>
+<%end %>
+    <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
+    <%= render 'follow_form' if logged_in? %>
+<% if user_signed_in? && current_user == @user %>
+<% resource_name = :user %>
+<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+<% @user.following.each do |f| %>
+	<h3> <%= f.email%> </h3>
+	<h3> <%= link_to "Profilo", users_show_path  %> </h3>	
+<% end %>
+<h3> <%= link_to "Home", root_path %> </h3>
+<% end %>

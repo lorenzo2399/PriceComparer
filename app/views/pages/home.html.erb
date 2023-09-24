@@ -8,7 +8,22 @@
     <% end %>
 <%= link_to "Edit Account", edit_user_registration_path %>
 <%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+
+
 <button onclick="window.location.href='/user/<%= current_user.id %>';">Profilo</button>
+
+ <div align="right">
+    <h1>Lista degli Utenti</h1>
+    <ul>
+      <% @users.each do |user| %>
+       <ul> <%= link_to user.full_name, user_path(user.id) %><ul>
+      <% end %>
+    </ul>
+  </div>
+
+
+
+
 <% else %>
 <p align = "center"> <%= link_to "Login", new_user_session_path %>  <%= link_to "Create Account", new_user_registration_path %>
 <% end %>

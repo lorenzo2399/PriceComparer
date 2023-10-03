@@ -3,6 +3,21 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :omniauthable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, omniauth_providers: [:google_oauth2]
+        
+attr_accessor :current_password
+
+has_one_attached :avatar
+
+	def avatar_thumbnail
+		if avatar.attached?
+			avatar.variant(resize:"150x150!").processed
+		else
+			"/assets/default_profile.jpg"
+		end  
+	end
+	
+	
+
          
 has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",

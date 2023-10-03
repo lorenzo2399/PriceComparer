@@ -1,13 +1,16 @@
 <% if @user.full_name.present? %>
 	<h3> <%= @user.full_name %> </h3>
-	<% if @user.avatar_url.present?%>
-           <%= image_tag(@user.avatar_url, class:"img-responsive img-circle",style:"width:150px;height:150px;margin:auto;")%>
-   	<% else %>
-           <%= image_tag('dog.jpg', class:"img-responsive img-circle", style:"width:150px;height:150px;margin:auto;") %>
-           <%end %>
-<%else %>
-	<h3> <%= @user.email + " non ha un nome associato"  %>  </h3> 
-	<%= image_tag('dog.jpg', class:"img-responsive img-circle", style:"width:150px;height:150px;margin:auto;") %>
+	<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+<% else %>
+	<% if @user.avatar.attached?%>
+		<h3> <%= @user.email %> </h3>
+           	<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+
+	<%else %>
+	        <h3> <%= @user.email %> </h3>
+		<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+ 	
+ 	<%end %>
 <%end %>
     <section class="stats">
       <%= render 'shared/stats' %>
@@ -21,4 +24,5 @@
 	<h3> <%= link_to "Profilo" , user_path(f.id) %> </h3>
 <% end %>
 <% end %>
+
 <h3> <%= link_to "Home", root_path %> </h3>

@@ -94,11 +94,16 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.12.0)
     faraday (2.7.4)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
+    ffi (1.16.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
     haml (6.1.1)
@@ -106,8 +111,14 @@ GEM
       thor
       tilt
     hashie (5.0.0)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     importmap-rails (1.1.6)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
@@ -117,6 +128,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    json (2.6.3)
     jwt (2.7.0)
     loofah (2.20.0)
       crass (~> 1.0.2)
@@ -129,6 +141,7 @@ GEM
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
+    mini_magick (4.12.0)
     mini_mime (1.1.2)
     minitest (5.18.0)
     msgpack (1.7.0)
@@ -211,6 +224,8 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.2.5)
+    ruby-vips (2.1.4)
+      ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.9.0)
@@ -268,9 +283,13 @@ DEPENDENCIES
   capybara
   debug
   devise
+  dotenv-rails
   haml
+  httparty
+  image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  json
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection (~> 1.0)

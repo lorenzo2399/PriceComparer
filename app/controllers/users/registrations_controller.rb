@@ -3,7 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-
+ 
   # GET /resource/sign_up
   # def new
   #   super
@@ -29,16 +29,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
   
-def update_resource(resource, params)
-    if resource.provider == 'google_oauth2'
-      params.delete('current_password')
-      resource.password = params['password']
+protected
 
-      resource.update_without_password(params)
-    else
-      resource.update_with_password(params)
-    end
-  end
+  def update_resource(resource, params)
+    if resource.provider == 'google_oauth2'
+    	if params[:current_password].blank?
+     		resource.update_without_password(params.except(:current_password))
+    	end
+    else 
+    resource.update_with_password(params)
+    	end
+ end
   
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign

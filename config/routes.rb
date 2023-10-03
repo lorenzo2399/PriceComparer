@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'users/show'
   resources :user
   root 'pages#home'
+  get "pages/search", to: "pages#search", as:"search"
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
     sessions: 'users/sessions',

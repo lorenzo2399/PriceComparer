@@ -37,8 +37,14 @@ protected
      		resource.update_without_password(params.except(:current_password))
     	end
     else 
-    resource.update_with_password(params)
+    	if params[:current_password].blank? 
+     		resource.update_without_password(params.except(:current_password))
+    	else
+    		resource.update_with_password(params)
     	end
+    end
+    	
+ 
  end
   
   # GET /resource/cancel

@@ -1,0 +1,43 @@
+
+
+<h1><%= "Admin Board"%></h1>
+
+<div align="left">
+    <h1>Richieste degli Utenti</h1>
+    <ul>
+      <% @messages.each do |message| %>
+        <%= "Richiesta: "+message.content %>
+        <%= button_to "Risolta", user_message_path(user_id: message.user_id, id: message.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+
+      <% end %>
+    </ul>
+  </div>
+
+  <div align="left">
+
+  <% @users.each do |user| %>
+    <% if !user.admin? %>
+     <% if !user.moderator? %>
+         <%= "Utente: "+user.email%>
+            <%= link_to "Profilo", user_path(id: user.id) %>
+          
+          <%= button_to "Elimina", user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+          <p><%= link_to "Rendi moderatore", set_mod_path(id: user.id)%></p>
+    <%else %>
+         <p> <%= "Moderatore: "+user.email%></p>
+          <%= button_to "Elimina", user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+          <%= link_to "Rimuovi moderatore", remove_mod_path(id: user.id)%>
+    <% end%>
+    <% end %>
+  <%end %>
+  </div>
+
+
+    
+    
+<h2><%="Statistiche:"%></h2>
+<h3><%=" Numero Utenti: "+ @users.count.to_s%></h3>
+<h3><%=" Numero Recensioni: "+ @reviews.count.to_s%></h3>
+<h3><%="Numero ricerche salvate: "+ @researches.count.to_s%></h3>
+<h3> <%= link_to "Home", root_path %> </h3>
+

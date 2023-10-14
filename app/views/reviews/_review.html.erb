@@ -1,0 +1,8 @@
+<p><%= review.title %></p>
+<p><%= review.rating %></p>
+<p><%= review.comment %></p>
+
+<% if current_user==@user  || current_user.moderator? || current_user.admin?%>
+<%= link_to "Modifica" , edit_user_review_path(review.user_id, review) %>
+<%= link_to "Elimina" , user_review_path(review.user_id, review), data: {turbo_method: :delete, turbo_confirm:"Are you sure?"}%>
+<%end %>

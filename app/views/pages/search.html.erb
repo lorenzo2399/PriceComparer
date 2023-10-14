@@ -1,0 +1,133 @@
+<h1> <p align = "center"> Pages#home</h1>
+<p> <p align = "center"> Find me in app/views/pages/home.html.erb</p>
+
+<% if current_user %>
+	<% if current_user.full_name.present? %>
+	<h3> <%= current_user.full_name %> </h3>
+	<%= image_tag(current_user.avatar_thumbnail, :width => '200px') %>
+<% else %>
+	<% if current_user.avatar.attached?%>
+		<h3> <%= current_user.email %> </h3>
+           	<%= image_tag(current_user.avatar_thumbnail, :width => '200px') %>
+
+	<%else %>
+	        <h3> <%= current_user.email %> </h3>
+		<%= image_tag(current_user.avatar_thumbnail, :width => '200px') %>
+ 	
+ 	<%end %>
+<%end %>
+
+<%= link_to "Edit Account", edit_user_registration_path %>
+<%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+
+
+<button onclick="window.location.href='/users/<%= current_user.id %>';">Profilo</button>
+
+ <div align="right">
+    <h1>Lista degli Utenti</h1>
+    <ul>
+      <% @users.each do |user| %>
+       <ul> <%= link_to user.full_name, users_path(id: user.id) %><ul>
+      <% end %>
+    </ul>
+  </div>
+
+  <% if @search_results.present? %>
+  <h2>Risultati della ricerca:</h2>
+  <div class="vertical-list">
+    <% @search_results.each do |item| %>
+      <div class="result-item">
+        <% if @instaexp==1 %>
+          <% if item["listingInfo"][0]["buyItNowAvailable"][0]=="true" %>
+                <h3><%= item["title"][0] %></h3>
+                <%="Feedback venditore: "+ item["sellerInfo"][0]["feedbackScore"][0].to_i.to_s%>
+                <%="Tempo di attesa: "+ item["shippingInfo"][0]["handlingTime"].to_s%>
+                <p>Prezzo: <%= item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
+                <p>Link Prodotto: <%= link_to "Vai al prodotto", item["viewItemURL"][0] %></p> 
+                <p><% "DIsponibilità immediata" %></p>
+                <% if current_user && !@researches_item_id.include?(item["itemId"][0].to_i)%>
+                    <%= link_to "Salva", new_user_research_path(current_user.id, title: item["title"][0], price: item["sellingStatus"][0]["currentPrice"][0]["__value__"], location: item["location"][0] + "  " + item["country"][0], item_id: item["itemId"][0], url: item["viewItemURL"][0], feed:item["sellerInfo"][0]["feedbackScore"][0].to_i ,time: item["shippingInfo"][0]["handlingTime"][0].to_i ) %>
+                <% end %>
+                <% for element in @resitem%>
+                    <%if element[0].to_i==item["itemId"][0].to_i && element[1].to_i> item["shippingInfo"][0]["shippingServiceCost"][0]["__value__"].to_i%>
+                        <p><%= "Il prodotto si è abbassato di prezzo" %></p>
+                    <%end %>
+                <%end %>
+            <% if current_user && !@reviews_item_id.include?(item["itemId"][0].to_i)%>
+                <%= link_to "Review", new_user_review_path(current_user.id, title: item["title"][0], item_id: item["itemId"][0]) %>
+            <% end %>        
+          <%else %>
+              <p><%="Il prodotto: "+ item["title"][0] +" "+"non è disponibile immediatamente"%></p>
+          <%end %>
+        <% else %>
+          <h3><%= item["title"][0] %></h3>
+          <%="Feedback venditore: "+ item["sellerInfo"][0]["feedbackScore"][0].to_i.to_s%>
+          <%="Tempo di attesa: "+ item["shippingInfo"][0]["handlingTime"][0].to_s%>
+          <p>Prezzo: <%= item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
+          <p>Link Prodotto: <%= link_to "Vai al prodotto", item["viewItemURL"][0] %></p> 
+          <% if @instaexp==1 && item["listingInfo"][0]["buyItNowAvailable"][0]=="false" %>
+              <p><%= "Nessun risultato trovato " %></p>
+          <% end %>
+          <% if current_user && !@researches_item_id.include?(item["itemId"][0].to_i)%>
+              <%= link_to "Salva", new_user_research_path(current_user.id, title: item["title"][0], price: item["sellingStatus"][0]["currentPrice"][0]["__value__"], location: item["location"][0] + "  " + item["country"][0], item_id: item["itemId"][0], url: item["viewItemURL"][0], feed:item["sellerInfo"][0]["feedbackScore"][0].to_i ,time: item["shippingInfo"][0]["handlingTime"][0].to_i ) %>
+          <% end %>
+          <% for element in @resitem%>
+              <%if element[0].to_i==item["itemId"][0].to_i && element[1].to_i> item["shippingInfo"][0]["shippingServiceCost"][0]["__value__"].to_i%>
+                  <p><%= "Il prodotto si è abbassato di prezzo" %></p>
+              <%end %>
+          <%end %>
+          <% if current_user && !@reviews_item_id.include?(item["itemId"][0].to_i)%>
+              <%= link_to "Review", new_user_review_path(current_user.id, title: item["title"][0], item_id: item["itemId"][0]) %>
+          <% end %>
+        <%end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>Nessun risultato trovato.</p>
+<% end %>
+
+
+
+<% else %>
+<p align = "center"> <%= link_to "Login", new_user_session_path %>  <%= link_to "Create Account", new_user_registration_path %>
+
+<% if @search_results.present? %>
+  <h2>Risultati della ricerca:</h2>
+  <div class="vertical-list">
+    <% @search_results.each do |item| %>
+      <div class="result-item">
+        <h3><%= item["title"][0] %></h3>
+        <%="Feedback venditore: "+ item["sellerInfo"][0]["feedbackScore"][0].to_i.to_s%>
+        <%="Tempo di attesa: "+ item["shippingInfo"][0]["handlingTime"][0].to_i.to_s%>
+        <p>Prezzo: <%= item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
+        <p>Link Prodotto: <%= link_to "Vai al prodotto", item["viewItemURL"][0] %></p> 
+        <% if item["listingInfo"][0]["buyItNowAvailable"][0]=="true" %>
+            <%= "Disponibilità immediata" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>Nessun risultato trovato.</p>
+<% end %>
+
+<% end %>
+
+
+
+<%= form_tag(search_path, method: :get) do %>
+	<%= text_field_tag :keyword, params[:keyword], placeholder: 'Cerca' %>
+	<%= select_tag :sort_order, options_for_select([["Prezzo più basso", "PricePlusShippingLowest"], ["Prezzo più alto", "PricePlusShippingHighest"]], params[:sort_order]), prompt: "Seleziona un ordine" %>
+	<%= label_tag :minprice, "Prezzomin:"%>
+	<%= number_field_tag :minprice, params[:minprice], :value => 1, min: 1%>
+	<%= label_tag :maxprice, "Prezzomax:"%>
+	<%= number_field_tag :maxprice, params[:maxprice], :value => 10000, max: 10000 %></p>
+  <%= label_tag :instaexp, "Diponibilità immediata:"%>
+  <%= label_tag :minf, "Feed minimo:"%>
+	<%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %></p>
+  <%= check_box_tag "instaexp", 1 , false%>
+  <%= text_field_tag :place, params[:place], placeholder: 'Luogo' %>
+	<%= submit_tag 'Cerca' %>
+  <% end %>
+

@@ -1,0 +1,12 @@
+<p><%= "Titolo: "+research.title%></p> 
+<p><%= "Luogo: "+research.location%></p> 
+<p><%="Prezzo: "+research.price.to_s%></p> 
+<p><%="Feed: "+research.feed.to_i.to_s%></p> 
+<p><%="Tempo di attesa: "+research.time.to_i.to_s%></p> 
+<%= link_to "Vai al prodotto", research.url %>
+
+<% if current_user==@user  || @user.moderator? || @user.admin?%>
+<%= link_to "Elimina" , user_research_path(research.user_id, research), data: {turbo_method: :delete, turbo_confirm:"Are you sure?"}%>
+
+
+<%end %>

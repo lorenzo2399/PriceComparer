@@ -1,0 +1,44 @@
+<% if @user.full_name.present? %>
+	<h3> <%= @user.full_name %> </h3>
+	<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+<% else %>
+	<% if @user.avatar.attached?%>
+		<h3> <%= @user.email %> </h3>
+           	<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+
+	<%else %>
+	        <h3> <%= @user.email %> </h3>
+		<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+ 	
+ 	<%end %>
+<%end %>
+    <section class="stats">
+      <%= render 'shared/stats' %>
+    </section>
+    <%= render 'users/follow_form' if logged_in? %>
+<% if user_signed_in? && current_user == @user %>
+<button onclick="window.location.href='/users/<%= current_user.id %>';">Profilo</button>
+
+<% resource_name = :user %>
+<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+<% @user.following.each do |f| %>
+	<h3> <%= f.email%> </h3>
+	<h3> <%= link_to "Profilo" , users_path(f.id) %> </h3>
+<% end %>
+<% end %>
+<%= "Recensioni:" %>
+<%= render @user.reviews %>
+<p><%= "Ricerche:" %></p>
+<% @results.each do |record| %>
+    <p><%= "Titolo: "+record.title%></p>
+    <p><%= "Luogo: "+record.location%></p>
+    <p><%= "Prezzo: "+record.price.to_s%></p>
+    <p><%= "Feed: "+record.feed.to_i.to_s%></p>
+	<p><%= "Tempo di attesa: "+record.time.to_i.to_s%></p>
+<%= link_to "Vai al prodotto", record.url %>
+<% if current_user==@user %>
+<%= link_to "Elimina" , user_research_path(record.user_id, record), data: {turbo_method: :delete, turbo_confirm:"Are you sure?"}%>
+<%end %>
+<%end%>
+
+<h3> <%= link_to "Home", root_path %> </h3>

@@ -1,9 +1,0 @@
-<h3><%= "Scrivi messaggio che vuoi inviare"%></h3>
-<%= form_for [current_user, Message.new] do |f| %>
-    <%= f.label :Testo %>
-	<p><%= f.text_area :content%></p>
-
-  
-
-<%= f.submit :"Invia"%>
-<%end %>

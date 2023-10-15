@@ -35,7 +35,9 @@ class PagesController < ApplicationController
     if @place==""
       @place="US"
     end
-    
+    if @instaexp==0
+      @instaexp=30
+    end
     @minf=params[:minf]
     
     @minp=@minprice.to_i
@@ -53,6 +55,10 @@ class PagesController < ApplicationController
   <itemFilter>
     <name>AvailableTo</name>
     <value>#{@place}</value>
+  </itemFilter>
+  <itemFilter>
+    <name>MaxHandlingTime</name>
+    <value>#{@instaexp}</value>
   </itemFilter>
   <itemFilter>
     <name>FeedbackScoreMin</name>
@@ -92,8 +98,8 @@ XML
 
 res=JSON.parse(response)
 
-
 @search_results = res["findItemsByKeywordsResponse"][0]["searchResult"][0]["item"]
- 
+  
+
 end
 end

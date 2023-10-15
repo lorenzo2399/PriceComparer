@@ -72,9 +72,7 @@ XML
        )
     
     res=JSON.parse(response)
-    puts res
     res=res["findItemsByKeywordsResponse"][0]["searchResult"][0]["item"]
-    puts res
     return res
     end
 

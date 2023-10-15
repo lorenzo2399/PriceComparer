@@ -14,7 +14,6 @@ class PagesController < ApplicationController
   def search
     @users=User.all
     @user=current_user
-
     @keyword=params[:keyword]
 
     if current_user 

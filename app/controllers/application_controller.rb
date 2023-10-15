@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+ before_action :set_locale
 
 	
 	  
@@ -13,4 +14,8 @@ class ApplicationController < ActionController::Base
 		end
 		
 		
+def set_locale
+	I18n.locale=session[:select_l] || I18n.default_locale
+end
+
 end

@@ -1,9 +1,9 @@
-<h3><%= "Scrivi messaggio che vuoi inviare"%></h3>
+<h3><%= t("messaggio")%></h3>
 <%= form_for [current_user, Message.new] do |f| %>
-    <%= f.label :Testo %>
+    <%= f.label t("content") %>
 	<p><%= f.text_area :content%></p>
 
   
 
-<%= f.submit :"Invia"%>
+<%= f.submit t("send")%>
 <%end %>

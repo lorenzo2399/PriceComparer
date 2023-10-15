@@ -306,6 +306,7 @@ DEPENDENCIES
   dotenv-rails
   haml
   httparty
+  i18n
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

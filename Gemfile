@@ -18,6 +18,8 @@ end
 
 gem "cancancan"
 
+gem "i18n"
+
 gem "rexml"
 
 # Use the Puma web server [https://github.com/puma/puma]

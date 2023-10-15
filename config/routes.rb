@@ -34,7 +34,9 @@ resource :users, except: [:edit, :create, :update]
   # Custom search route
   get "pages/search", to: "pages#search", as: "search"
 
-  
+  get "pages/cambia", to:"pages#cambia", as:"cambia"
+
+
   get 'admin_board/set_mod', to: 'users#set_mod', as: 'set_mod'
 
   get 'admin_board/remove_mod', to: 'users#remove_mod', as:'remove_mod'

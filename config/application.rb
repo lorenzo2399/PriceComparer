@@ -15,6 +15,10 @@ module PriceComparer
 config.active_storage.variant_processor = :mini_magick
 
 
+config.i18n.enforce_available_locales = false
+config.i18n.available_locales = [:en, :it]
+config.i18n.default_locale = :it
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

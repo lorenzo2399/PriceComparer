@@ -3,11 +3,11 @@
 <h1><%= "Admin Board"%></h1>
 
 <div align="left">
-    <h1>Richieste degli Utenti</h1>
+    <h1><%=t("richieste")%></h1>
     <ul>
       <% @messages.each do |message| %>
-        <%= "Richiesta: "+message.content %>
-        <%= button_to "Risolta", user_message_path(user_id: message.user_id, id: message.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+        <%= t("richiesta")+message.content %>
+        <%= button_to t("risolta"), user_message_path(user_id: message.user_id, id: message.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
 
       <% end %>
     </ul>
@@ -18,15 +18,15 @@
   <% @users.each do |user| %>
     <% if !user.admin? %>
      <% if !user.moderator? %>
-         <%= "Utente: "+user.email%>
-            <%= link_to "Profilo", user_path(id: user.id) %>
+         <%= t("utente")+user.email%>
+            <%= link_to t("profilo"), user_path(id: user.id) %>
           
-          <%= button_to "Elimina", user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-          <p><%= link_to "Rendi moderatore", set_mod_path(id: user.id)%></p>
+          <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+          <p><%= link_to t("modmake"), set_mod_path(id: user.id)%></p>
     <%else %>
-         <p> <%= "Moderatore: "+user.email%></p>
-          <%= button_to "Elimina", user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-          <%= link_to "Rimuovi moderatore", remove_mod_path(id: user.id)%>
+         <p> <%= t("mod")+user.email%></p>
+          <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+          <%= link_to t("modre"), remove_mod_path(id: user.id)%>
     <% end%>
     <% end %>
   <%end %>
@@ -35,9 +35,9 @@
 
     
     
-<h2><%="Statistiche:"%></h2>
-<h3><%=" Numero Utenti: "+ @users.count.to_s%></h3>
-<h3><%=" Numero Recensioni: "+ @reviews.count.to_s%></h3>
-<h3><%="Numero ricerche salvate: "+ @researches.count.to_s%></h3>
+<h2><%=t("statistiche")%></h2>
+<h3><%=t("numute")+ @users.count.to_s%></h3>
+<h3><%=t("nurece")+ @reviews.count.to_s%></h3>
+<h3><%=t("ricesa")+ @researches.count.to_s%></h3>
 <h3> <%= link_to "Home", root_path %> </h3>
 

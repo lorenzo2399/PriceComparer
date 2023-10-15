@@ -10,7 +10,12 @@ class PagesController < ApplicationController
      @users = User.all
   end
 
-
+  def cambia 
+  locale = params[:locale].to_sym
+  I18n.locale = locale
+  session[:select_l] = I18n.locale
+  redirect_to root_path
+end
   def search
     @users=User.all
     @user=current_user
@@ -96,7 +101,7 @@ XML
    )
 
 res=JSON.parse(response)
-
+puts res
 @search_results = res["findItemsByKeywordsResponse"][0]["searchResult"][0]["item"]
   
 

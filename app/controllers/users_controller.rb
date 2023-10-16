@@ -10,12 +10,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def correct_user
-    @user = User.find_by(params[:id])
-    unless current_user?(@user)
-      redirect_to user_path(current_user)
-    end
-  end
+  
 
   def admin_board
     @messages=Message.all

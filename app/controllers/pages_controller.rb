@@ -31,8 +31,9 @@ def search
       @resitem=cercaitem
     end
 
+
     chiamata = Caller.new
-    @search_results =chiamata .cerca(params[:keyword], params[:sort_order], params[:minprice].to_i, params[:maxprice].to_i,params[:instaexp].to_i, params[:place],params[:minf])
+    @search_results =chiamata .cerca(params[:keyword], params[:sort_order], params[:minprice].to_i, params[:maxprice].to_i,params[:instaexp].to_i, params[:place],params[:minf], params[:maxtime])
     
   
 

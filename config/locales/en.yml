@@ -57,7 +57,7 @@ en:
  recensioni: "Reviews"
  ricerche: "Researches"
  tempo: "Filter by time"
- feed: "Filter by feed"
+ feedord: "Filter by feed"
  modifica: "Modify"
  elimina: "Delete"
  titolo: "Title: "
@@ -78,3 +78,4 @@ en:
  edit: "Edit"
  pass: "(leave blank if you don't want to change it)"
  cpass: "(we need your current password to confirm your changes)"
+ time: "Handling time: "

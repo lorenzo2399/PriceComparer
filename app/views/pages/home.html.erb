@@ -1,6 +1,7 @@
 <h1> <p align = "center"> Home</h1>
 
 
+
 <% if current_user %>
 	<% if current_user.full_name.present? %>
 	<h3> <%= current_user.full_name %> </h3>
@@ -37,22 +38,21 @@
   </div>
 
 
-
   <%= form_tag(search_path, method: :get) do %>
 	<%= text_field_tag :keyword, params[:keyword], placeholder: t("cerca") %>
-	<%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"]], params[:sort_order]), prompt: t("ordine") %>
-	<%= label_tag :minprice, t("pbasso")%>
+	<p><%= label_tag :minprice, t("pbasso")%></p>
 	<%= number_field_tag :minprice, params[:minprice], :value => 1, min: 1%>
-	<%= label_tag :maxprice, t("palto")%>
+	<p><%= label_tag :maxprice, t("palto")%></p>
 	<%= number_field_tag :maxprice, params[:maxprice], :value => 10000, max: 10000 %></p>
   <%= label_tag :minf, t("fmin")%>
 	<%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %></p>
 	<%= label_tag :instaexp, t("iexp")%>
 	<%= check_box_tag "instaexp", 1 , false%>
-	<%= text_field_tag :place, params[:place], placeholder: t("place") %>
-
-	<%= submit_tag t("cerca") %>
-  <% end %>
+	<p><%= text_field_tag :place, params[:place], placeholder: t("place") %></p>
+	<%= label_tag :maxtime, t("tmax")%>
+	<p><%= number_field_tag :maxtime, params[:maxtime], :value => 30, min: 1 %></p>
+	<%= submit_tag t("cerca") %> 	<%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"]], params[:sort_order]), prompt: t("ordine") %>
+<% end %>
 
 
 <% else %>
@@ -60,19 +60,19 @@
 
 <%= form_tag(search_path, method: :get) do %>
 	<%= text_field_tag :keyword, params[:keyword], placeholder: t("cerca") %>
-	<%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"]], params[:sort_order]), prompt: t("ordine") %>
-	<%= label_tag :minprice, t("pbasso")%>
+	<p><%= label_tag :minprice, t("pbasso")%></p>
 	<%= number_field_tag :minprice, params[:minprice], :value => 1, min: 1%>
-	<%= label_tag :maxprice, t("palto")%>
+	<p><%= label_tag :maxprice, t("palto")%></p>
 	<%= number_field_tag :maxprice, params[:maxprice], :value => 10000, max: 10000 %></p>
   <%= label_tag :minf, t("fmin")%>
 	<%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %></p>
 	<%= label_tag :instaexp, t("iexp")%>
 	<%= check_box_tag "instaexp", 1 , false%>
-	<%= text_field_tag :place, params[:place], placeholder: t("place") %>
-
-	<%= submit_tag t("cerca") %>
-  <% end %>
+	<p><%= text_field_tag :place, params[:place], placeholder: t("place") %></p>
+	<%= label_tag :maxtime, t("tmax")%>
+	<p><%= number_field_tag :maxtime, params[:maxtime], :value => 30, min: 1 %></p>
+	<%= submit_tag t("cerca") %> 	<%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"]], params[:sort_order]), prompt: t("ordine") %>
+<% end %>
   
 <%end %>
 

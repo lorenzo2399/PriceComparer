@@ -1,7 +1,6 @@
 class Caller
 
-    def cerca(keyword, sort_order,minprice,maxprice,instaexp,place,minf)
-
+    def cerca(keyword, sort_order,minprice,maxprice,instaexp,place,minf,maxtime)
         @keyword=keyword
         @sort_order=sort_order
         @minprice=minprice
@@ -15,7 +14,7 @@ class Caller
             @place="US"
           end
           if @instaexp==0
-            @instaexp=30
+            @instaexp=maxtime
           end
 
     # URL dell'endpoint dell'API sandbox di eBay

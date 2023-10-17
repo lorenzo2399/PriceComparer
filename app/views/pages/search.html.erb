@@ -32,61 +32,72 @@
     </ul>
   </div>
 
-  <% if @search_results.present? %>
-  <h2><%=t("risultati")%></h2>
+
+
+  <% if @risultato.present? ||%>
+  <h2><%=t("risultati") %></h2>
   <div class="vertical-list">
-    <% @search_results.each do |item| %>
-      <div class="result-item">
-        <h3><%= item["title"][0] %></h3>
-        <%=t("feed")+ item["sellerInfo"][0]["feedbackScore"][0].to_i.to_s%>
-        <%=t("time")+ item["shippingInfo"][0]["handlingTime"][0].to_i.to_s%>
-        <p> <%= t("price")+item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
-        <p> <%= t("link")%> <%= link_to t("vai"), item["viewItemURL"][0] %></p> 
-        <% if item["listingInfo"][0]["buyItNowAvailable"][0]=="true" %>
+  <% @risultato.each do |item| %>
+  <div class="result-item">
+        <h3><%= item["title"] %></h3>
+        <%=t("feed")+ item["feed"].to_s%>
+        <%=t("time")+ item["time"].to_s%>
+         <%= t("price")+item["price"].to_s+ item["currency"]%> 
+         <p> <%= "Negozio: "+item["negozio"]%>  <%= t("location")+item["location"]%> </p>
+        <p> <%= t("link")%> <%= link_to t("vai"), item["url"] %></p> 
+        <% if item["iexp"]=="true" %>
             <%= t("iexp") %>
         <% end %>
-        <% if current_user && !@researches_item_id.include?(item["itemId"][0].to_i)%>
-            <%= link_to t("save"), new_user_research_path(current_user.id, title: item["title"][0], price: item["sellingStatus"][0]["currentPrice"][0]["__value__"], location: item["location"][0] + "  " + item["country"][0], item_id: item["itemId"][0], url: item["viewItemURL"][0], feed:item["sellerInfo"][0]["feedbackScore"][0].to_i ,time: item["shippingInfo"][0]["handlingTime"][0].to_i ) %>
-        <% end %>
-        <% for element in @resitem%>
-            <%if element[0].to_i==item["itemId"][0].to_i && element[1].to_i> item["shippingInfo"][0]["shippingServiceCost"][0]["__value__"].to_i%>
-                <p><%= t("low")%></p>
+        <% if @researches_item_id!=nil %>
+            <% if current_user && !@researches_item_id.include?(item["item_id"].to_i)%>
+                <%= link_to t("save"), new_user_research_path(current_user.id, title: item["title"], price: item["price"], location: item["location"], item_id: item["item_id"], url: item["url"], feed:item["feed"].to_i ,time: item["time"].to_i ) %>
+            <% end %>
+        <% else %>
+            <%= link_to t("save"), new_user_research_path(current_user.id, title: item["title"], price: item["price"], location: item["location"], item_id: item["item_id"], url: item["url"], feed:item["feed"].to_i ,time: item["time"].to_i ) %>
+        <%end%>
+        <% if @resitem!=nil%>
+            <% for element in @resitem%>
+                <%if element[0].to_i==item["item_id"].to_i && element[1].to_i> item["price"].to_i%>
+                    <p><%= t("low")%></p>
+                <%end %>
             <%end %>
-        <%end %>
-        <% if current_user && !@reviews_item_id.include?(item["itemId"][0].to_i)%>
-            <%= link_to t("rec"), new_user_review_path(current_user.id, title: item["title"][0], item_id: item["itemId"][0]) %>
-        <% end %>
-      </div>
-    <% end %>
+        <%end%>
+        <% if @reviews_item_id!=nil%>
+            <% if current_user && !@reviews_item_id.include?(item["item_id"].to_i)%>
+                <%= link_to t("rec"), new_user_review_path(current_user.id, negozio: item["negozio"],title: item["title"], item_id: item["item_id"], ) %>
+            <% end %>
+        <%else%>
+            <%= link_to t("rec"), new_user_review_path(current_user.id, title: item["title"], item_id: item["item_id"]) %>
+        <%end%>
+      <%end%>
+     </div>
   </div>
-<% else %>
-  <p><%=t("nores")%></p>
-<% end %>
-
-
+ <%end%>
+  
 
 <% else %>
 <p align = "center"> <%= link_to "Login", new_user_session_path %>  <%= link_to "Create Account", new_user_registration_path %>
 
-<% if @search_results.present? %>
-  <h2>t("risultati")</h2>
-  <div class="vertical-list">
-    <% @search_results.each do |item| %>
-      <div class="result-item">
-        <h3><%= item["title"][0] %></h3>
-        <%=t("feed")+ item["sellerInfo"][0]["feedbackScore"][0].to_i.to_s%>
-        <%=t("time")+ item["shippingInfo"][0]["handlingTime"][0].to_i.to_s%>
-        <p>t("price")<%= item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
-        <p>t("link") <%= link_to t("link"), item["viewItemURL"][0] %></p> 
-        <% if item["listingInfo"][0]["buyItNowAvailable"][0]=="true" %>
-            <%= t("iexp") %>
+   <% if @risultato.present? %>
+      <h2><%=t("risultati")%></h2>
+      <div class="vertical-list">
+        <% @risultato.each do |item| %>
+          <div class="result-item">
+            <h3><%= item["title"] %></h3>
+            <%=t("feed")+ item["feed"].to_i.to_s%>
+            <%=t("time")+ item["time"].to_i.to_s%>
+            <p>t("price")<%= item["price"]+ item["currency"]%></p> <%= "Negozio: "+item["negozio"]%>
+            <p>t("link") <%= link_to t("link"), item["url"] %></p> 
+            <% if item["iexp"]=="true" %>
+                <%= t("iexp") %>
+            <% end %>
+          </div>
         <% end %>
       </div>
-    <% end %>
-  </div>
-<% else %>
-<p><%=t("nores")%></p>
-<% end %>
+   <% else %>
+        <p><%=t("nores")%></p>
+  <% end %>
+
 
 <% end %>
 
@@ -99,13 +110,13 @@
 	<p><%= label_tag :maxprice, t("palto")%></p>
 	<%= number_field_tag :maxprice, params[:maxprice], :value => 10000, max: 10000 %></p>
   <%= label_tag :minf, t("fmin")%>
-	<%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %></p>
+	<p><%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %></p>
 	<%= label_tag :instaexp, t("iexp")%>
 	<%= check_box_tag "instaexp", 1 , false%>
 	<p><%= text_field_tag :place, params[:place], placeholder: t("place") %></p>
 	<%= label_tag :maxtime, t("tmax")%>
 	<p><%= number_field_tag :maxtime, params[:maxtime], :value => 30, min: 1 %></p>
-	<%= submit_tag t("cerca") %> 	<%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"]], params[:sort_order]), prompt: t("ordine") %>
+	<%= submit_tag t("cerca") %> 	<%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"] ,["Tempo", "Time"] , ["Feedback", "Feed"]], params[:sort_order]), prompt: t("ordine") %>
 <% end %>
 
   <% if current_user && current_user.admin?%>

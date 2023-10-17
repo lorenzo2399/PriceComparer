@@ -8,6 +8,7 @@ before_action :f_review , only: [:destroy, :edit, :update,]
 
 
 	def new
+		@negozio=params[:negozio]
 		@item_id=params[:item_id]
 		@title=params[:title]
 		@review=Review.new
@@ -45,7 +46,7 @@ before_action :f_review , only: [:destroy, :edit, :update,]
 	private
 	
 	def review_params
-		params.require(:review).permit(:title,:rating, :comment, :item_id)
+		params.require(:review).permit(:title,:rating, :comment, :item_id, :negozio)
 	end
 	
 	def f_user

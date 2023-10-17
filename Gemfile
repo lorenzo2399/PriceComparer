@@ -12,8 +12,10 @@ gem "sprockets-rails"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
 
-group :development, :test do
-  gem 'rspec-rails'
+group :test do
+  gem 'cucumber-rails', require: false
+  gem "rspec-rails"
+  gem 'database_cleaner'
 end
 
 gem "cancancan"

@@ -1,7 +1,11 @@
 <%= form_for [current_user, Review.new] do |f| %>
   	<%= f.hidden_field :title, value: @title %>
+
 	<p><%= f.number_field :rating, max: 5, min: 1 %></p>
 	<%= f.hidden_field :item_id, value: @item_id %>
+
+	<%= f.hidden_field :negozio, value: @negozio %>
+
 
 	<%= f.label :Valutazione %>
 	<p><%= f.text_area :comment%></p>

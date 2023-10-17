@@ -11,6 +11,11 @@
   	<%=f.label :avatar%>
   	<%= f.file_field :avatar %>
   </div>
+  
+  <div class="field">
+    <%= f.label :Categoria %>
+    <%= f.select :favorite_category, ["Moda", "Elettronica", "Sport", "Casa", "Giardinaggio"], { include_blank: "nessuna categoria" } %>
+  </div>
 	
   <div class="field">
     <%= f.label :email %><br />

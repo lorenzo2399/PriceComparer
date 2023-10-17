@@ -34,7 +34,7 @@
 
 
 
-  <% if @risultato.present? ||%>
+  <% if @risultato.present?%>
   <h2><%=t("risultati") %></h2>
   <div class="vertical-list">
   <% @risultato.each do |item| %>
@@ -72,6 +72,8 @@
       <%end%>
      </div>
   </div>
+ <%else%>
+ <h2><%= t("nores")%></h2>
  <%end%>
   
 
@@ -86,8 +88,8 @@
             <h3><%= item["title"] %></h3>
             <%=t("feed")+ item["feed"].to_i.to_s%>
             <%=t("time")+ item["time"].to_i.to_s%>
-            <p>t("price")<%= item["price"]+ item["currency"]%></p> <%= "Negozio: "+item["negozio"]%>
-            <p>t("link") <%= link_to t("link"), item["url"] %></p> 
+            <p><%=t("price")%><%= item["price"].to_s+ item["currency"]%></p> <%= "Negozio: "+item["negozio"]%>
+            <p><%=t("link")%> <%= link_to t("link"), item["url"] %></p> 
             <% if item["iexp"]=="true" %>
                 <%= t("iexp") %>
             <% end %>

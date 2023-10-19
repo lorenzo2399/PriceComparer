@@ -15,12 +15,13 @@ gem "sqlite3", "~> 1.4"
 group :test do
   gem 'cucumber-rails', require: false
   gem "rspec-rails"
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
 end
 
 gem "cancancan"
 
-gem "i18n"
+gem "i18n", "~> 1.13.0"
 
 gem "rexml"
 

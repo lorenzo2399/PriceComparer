@@ -31,7 +31,7 @@ before_action :f_review , only: [:destroy, :edit, :update,]
 		
 	def update
 		if @review.update(review_params)
-			redirect_to root_path
+			redirect_to user_path(@user.id)
 		else 
 			render "edit"
 		end

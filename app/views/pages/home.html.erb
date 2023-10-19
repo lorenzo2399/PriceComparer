@@ -1,108 +1,114 @@
-<h1> <p align = "center"> Home</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <style>
+    .language-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px;
+    }
 
+    .filter-container {
+      float: right; 
+      width: 300px;
+    }
+  </style>
+  <h1> <p align="center"> Home</h1>
+</head>
+<body>
 
+  <!-- Profilo -->
+  <div style="flex: 1; text-align: left;"> 
+    <% if current_user %>
+      <div>
+        <%= image_tag(current_user.avatar_thumbnail, width: '200px') %>
+        <h4><%= current_user.full_name.present? ? current_user.full_name : current_user.email %></h4>
+      </div>
+      <div>
+	<%= link_to "Edit Account", edit_user_registration_path %>
+	<%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+      </div>
+    <% else %>
+      <%= link_to "Login", new_user_session_path %> 
+      <%= link_to "Crea Account", new_user_registration_path %> 
+    <% end %>
+  </div>
+</div>
 
 <% if current_user %>
-	<% if current_user.full_name.present? %>
-	<h3> <%= current_user.full_name %> </h3>
-	<%= image_tag(current_user.avatar_thumbnail, :width => '200px') %>
-<% else %>
-	<% if current_user.avatar.attached?%>
-		<h3> <%= current_user.email %> </h3>
-           	<%= image_tag(current_user.avatar_thumbnail, :width => '200px') %>
-
-	<%else %>
-	        <h3> <%= current_user.email %> </h3>
-		<%= image_tag(current_user.avatar_thumbnail, :width => '200px') %>
- 	
- 	<%end %>
+<button onclick="window.location.href='/users/<%= current_user.id %>';"><%=t("Profilo")%></button>
 <%end %>
 
-<%= link_to "Edit Account", edit_user_registration_path %>
-<%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
-
-
-<button onclick="window.location.href='/users/<%= current_user.id %>';"><%=t("Profilo")%></button>
-
- <div align="right">
-    <h1><%=t("lista")%></h1>
-    <ul>
-      <% @users.each do |user| %>
-			<%if user.full_name!=nil %>
-				<ul> <%= link_to user.full_name, users_path(id: user.id) %><ul>
-			<%else %>
-       			<ul> <%= link_to user.email, users_path(id: user.id) %><ul>
-      		<% end %>
-		<%end %>
-	</ul>
+<div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 10px;">
+  <div style="flex: 3; text-align: center;">
+    <% if @search_results.present? %>
+      <h2>Risultati della ricerca:</h2>
+      <ul>
+        <% @search_results.each do |item| %>
+          <li>
+            <h3><%= item["title"][0] %></h3>
+            <p>Prezzo: <%= item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
+            <p>Link al Prodotto: <%= link_to "Vai al prodotto", item["viewItemURL"][0] %></p>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>Nessun risultato trovato.</p>
+    <% end %>
   </div>
 
-<% if @search_results.present? %>
-  <h2>Risultati della ricerca:</h2>
-  <ul>
-    <% @search_results.each do |item| %>
-      <li>
-        <h3><%= item["title"][0] %></h3>
-        <p>Prezzo: <%= item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
-        <p>Link al Prodotto: <%= link_to "Vai al prodotto", item["viewItemURL"][0] %></p>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Nessun risultato trovato.</p>
+  <!-- Filtri -->
+  <div class="filter-container">
+    <%= form_tag(search_path, method: :get) do %>
+      <div style="display: flex; align-items: center;">
+        <%= text_field_tag :keyword, params[:keyword], placeholder: t("cerca"), required: true %>
+        <%= submit_tag t("cerca"), style: "margin-left: 10px;" %> 
+      </div>
+      <p><%= label_tag :minprice, t("pbasso") %></p>
+      <%= number_field_tag :minprice, params[:minprice], :value => 1, min: 1 %>
+      <p><%= label_tag :maxprice, t("palto") %></p>
+      <%= number_field_tag :maxprice, params[:maxprice], :value => 10000, max: 10000 %>
+      <p><%= label_tag :minf, t("fmin") %></p>
+      <%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %>
+      <p><%= label_tag :instaexp, t("iexp") %></p>
+      <%= check_box_tag "instaexp", 1, false %>
+      <p><%= text_field_tag :place, params[:place], placeholder: t("place") %></p>
+      <p><%= label_tag :maxtime, t("tmax") %></p>
+      <%= number_field_tag :maxtime, params[:maxtime], :value => 30, min: 1 %>
+      <%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"], ["Tempo", "Time"], ["Feedback", "Feed"]], params[:sort_order]), prompt: t("ordine") %>
+    </form>
+  </div>
+</div>
+
+
+<% if current_user%>
+<div align="right">
+<h1><%=t("lista")%></h1>
+<ul>
+  <% @users.each do |user| %>
+<ul> <%= link_to user.full_name, users_path(id: user.id) %><ul>
+  <%end %>
+</ul>
+</div>
+<%end%>
+
+
+<!-- Lingua e assistenza-->
+<div class="language-container">
+  <div style="text-align: left;">
+    <% if current_user && current_user.admin?%>
+    <%= link_to "Admin", admin_board_path %>
+    <%end%>
+    <%= link_to "Inglese", cambia_path(locale: :en) %>
+    <%= link_to "Italiano", cambia_path(locale: :it) %>
+    <% if current_user && current_user.role==0 %>
+      <%= link_to t("assistenza"), new_user_message_path(current_user.id) %> 
+    <% end %>	
+  </div>
+</div>
+</body>
+</html>
 <% end %>
-
-<%= form_tag(search_path, method: :get) do %>
-	<%= text_field_tag :keyword, params[:keyword], placeholder: t("cerca") %>
-	<p><%= label_tag :minprice, t("pbasso")%></p>
-	<%= number_field_tag :minprice, params[:minprice], :value => 1, min: 1%>
-	<p><%= label_tag :maxprice, t("palto")%></p>
-	<%= number_field_tag :maxprice, params[:maxprice], :value => 10000, max: 10000 %></p>
-  <%= label_tag :minf, t("fmin")%>
-	<p><%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %></p>
-	<%= label_tag :instaexp, t("iexp")%>
-	<%= check_box_tag "instaexp", 1 , false%>
-	<p><%= text_field_tag :place, params[:place], placeholder: t("place") %></p>
-	<%= label_tag :maxtime, t("tmax")%>
-	<p><%= number_field_tag :maxtime, params[:maxtime], :value => 30, min: 1 %></p>
-	<%= submit_tag t("cerca") %> 	<%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"] ,["Tempo", "Time"] , ["Feedback", "Feed"]], params[:sort_order]), prompt: t("ordine") %>
-<% end %>
-
-
-<% else %>
-<p align = "center"> <%= link_to "Login", new_user_session_path %>  <%= link_to "Create Account", new_user_registration_path %>
-
-<%= form_tag(search_path, method: :get) do %>
-	<%= text_field_tag :keyword, params[:keyword], placeholder: t("cerca") %>
-	<p><%= label_tag :minprice, t("pbasso")%></p>
-	<%= number_field_tag :minprice, params[:minprice], :value => 1, min: 1%>
-	<p><%= label_tag :maxprice, t("palto")%></p>
-	<%= number_field_tag :maxprice, params[:maxprice], :value => 10000, max: 10000 %></p>
-  <%= label_tag :minf, t("fmin")%>
-	<p><%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %></p>
-	<%= label_tag :instaexp, t("iexp")%>
-	<%= check_box_tag "instaexp", 1 , false%>
-	<p><%= text_field_tag :place, params[:place], placeholder: t("place") %></p>
-	<%= label_tag :maxtime, t("tmax")%>
-	<p><%= number_field_tag :maxtime, params[:maxtime], :value => 30, min: 1 %></p>
-	<%= submit_tag t("cerca") %> 	<%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"] ,["Tempo", "Time"] , ["Feedback", "Feed"]], params[:sort_order]), prompt: t("ordine") %>
-<% end %>
-  
-<%end %>
-
-<% if current_user && current_user.admin?%>
-<%= link_to "Admin", admin_board_path %>
-<%end %>
-
-
-<%= link_to "Inglese", cambia_path(locale: :en)  %>
-<%= link_to "Italiano", cambia_path(locale: :it) %>
-
-
-<% if current_user && current_user.role==0 %>
-<%= link_to t("assistenza"), new_user_message_path(current_user.id) %>
-<%end %>
-
-
-     
 

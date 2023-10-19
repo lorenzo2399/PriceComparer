@@ -23,7 +23,6 @@ def remove_mod
   @user = User.find(params[:id])
   @user.role=0
   @user.save
-  puts @user.role
   redirect_to admin_board_path
 end
 
@@ -31,7 +30,6 @@ end
     @user = User.find(params[:id])
     @user.role=2
     @user.save
-    puts @user.role
     redirect_to admin_board_path
 
   end
@@ -43,7 +41,11 @@ end
     else
       flash[:error] = "Impossibile eliminare l'utente."
     end
-    redirect_to root_path
+    if current_user.admin?
+      redirect_to admin_board_path
+    else
+      redirect_to root_path
+    end
   end
 
   def f_review

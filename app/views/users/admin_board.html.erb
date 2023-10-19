@@ -18,13 +18,13 @@
   <% @users.each do |user| %>
     <% if !user.admin? %>
      <% if !user.moderator? %>
-         <%= t("utente")+user.email%>
+         <%= t("utente")+ " " +user.full_name%>
             <%= link_to t("profilo"), user_path(id: user.id) %>
           
           <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
           <p><%= link_to t("modmake"), set_mod_path(id: user.id)%></p>
     <%else %>
-         <p> <%= t("mod")+user.email%></p>
+         <p> <%= t("mod")+" "+ user.full_name%></p>
           <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
           <%= link_to t("modre"), remove_mod_path(id: user.id)%>
     <% end%>

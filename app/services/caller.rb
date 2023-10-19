@@ -128,7 +128,6 @@ XML
        )
     
     res=JSON.parse(response)
-
     res=res["findItemsByKeywordsResponse"][0]["searchResult"][0]["item"]
     
     return res

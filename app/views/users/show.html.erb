@@ -19,10 +19,16 @@
 <% if user_signed_in? && current_user == @user %>
 <% resource_name = :user %>
 <div>Unhappy? <%= button_to t("cancella"), registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+
+
+<div align="right">
 <% @user.following.each do |f| %>
-	<h3> <%= f.email%> </h3>
-	<h3> <%= link_to t("profilo") , users_path(id: f.id) %> </h3>
+	<h4><%= "Amici:" %></h4>
+	<ul><%= f.full_name%> 
+	 <%= link_to t("profilo") , users_path(id: f.id) %> 
+	</ul>
 <% end %>
+</div>
 <% end %>
 
 <% if (current_user.moderator? || current_user.admin?) && @user!=current_user%>

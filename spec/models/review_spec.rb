@@ -6,11 +6,14 @@ RSpec.describe Review, type: :model do
   let(:review) { Review.new(user: user, rating: 4, comment: 'bello') }
 
   it 'is valid with valid attributes' do
-    @prova=FactoryBot.build(:review)
+    @prova=FactoryBot.build(:reviewa)
+    @prova.save
+    puts @prova.user_id
+    puts @prova.errors.full_messages
     expect(@prova).to be_valid
   end
 
-  it 'is valid without content' do
+  it 'is  not valid without content' do
     review.comment = nil
     expect(review).not_to be_valid
   end

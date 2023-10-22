@@ -1,4 +1,21 @@
-<div style="text-align: right;">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <style>
+    .language-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .filter-container {
+      float: right; 
+      width: 300px;
+    }
+  </style>
+  <div style="flex: 1; text-align: right;">
     <%= link_to "Home", root_path %>
     <% if current_user && current_user.admin?%>
 	<%= link_to "Admin", admin_board_path %>
@@ -10,8 +27,15 @@
           <%= link_to t("assistenza"), new_user_message_path(current_user.id) %> 
     <%end%>
   </div> 
+  <h1> <p align="left"> PriceComparer</h1>
+  
+</head>
+<body>
 
-<div style="flex: 1; text-align: left;"> 
+
+
+
+<div style="flex: 1; text-align: right;  "> 
     <% if current_user %>
       <div>
         <%= image_tag(current_user.avatar_thumbnail, width: '200px') %>

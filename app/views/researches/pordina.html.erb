@@ -74,8 +74,8 @@
 </div>
 <div class="center-container"> 
 <h3><p><%= t("ricerche") %></p></h3>
-<% @results.each do |record| %>
-    <p><h4>%= "Titolo: "+record.title%></h4></p>
+<% @presults.each do |record| %>
+    <p><h4><%= "Titolo: "+record.title%></h4></p>
     <p><%= "Luogo: "+record.location%></p>
     <p><%= "Prezzo: "+record.price.to_s%></p>
     <p><%= "Feed: "+record.feed.to_i.to_s%></p>
@@ -83,8 +83,8 @@
 </div>
 <div class="right-container">
 <% if current_user == @user %>
+   <p><%= link_to t("tempo"), ordina_path(user_id: @user.id) %></p>
    <p><%= link_to t("fordi"), feedordina_path(user_id: @user.id) %></p>
-   <p><%= link_to t("priceo"), pordina_path(user_id: @user.id) %></p>
  
    <% @user.following.each do |f| %>
     <h3><%="Amici: "%></h3>

@@ -1,3 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <style>
+  .container {
+    display: flex;
+    column-gap: 20px;
+    justify-content: space-between;
+  }
+  </style>
+  </head>
+<body>
+
+
+
+
+
+
 <% if current_user.admin?%>
 
 <h1><%= "Admin Board" %></h1>
@@ -30,21 +49,38 @@
     <h1><%= t("utenti") %></h1>
     <ul>
       <% @users.each do |user| %>
-        <% if !user.admin? %>
-          <% if !user.moderator? %>
-            <li><%= t("utente") + " "+user.full_name %></li>
-            <li><%= link_to t("profilo"), user_path(id: user.id) %></li>
-            <li><%= link_to t("modmake"), set_mod_path(id: user.id) %></li>
-<li><%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></li>
-          <% else %>
-            <li><%= t("mod") + " "+user.full_name %></li>
-            <li><%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></li>
-            <li><%= link_to t("modre"), remove_mod_path(id: user.id) %></li>
-          <% end %>
-        <% end %>
-      <% end %>
-    </ul>
-  </div>
+        <li>
+          <div style="display: flex; align-items: center;">
+            <div style="margin-right: 10px;">
+              <% if user.moderator? %>
+                <strong>Moderatore:</strong>
+              <% elsif user.admin? %>
+                <strong>Admin:</strong>
+              <% else %>
+                <strong>Utente:</strong>
+              <% end %>
+            </div>
+            <div class="container">
+            <%= user.full_name %>
+                <% if !user.admin? %>
+                  <% if !user.moderator? %>
+                  <%= link_to t("profilo"), user_path(id: user.id) %>
+                  <%= link_to t("modmake"), set_mod_path(id: user.id) %>
+      <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+                              
+                <% else %>
+                  <%= link_to t("modre"), remove_mod_path(id: user.id) %>
+                  <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+
+                <% end %>
+              <% end %>
+            <% end %>
+            </div>
+          </li>
+        </ul>
+        </div>
+      </div>
+
 
   <div style="flex: 1;">
     <h1><%= t("altro") %></h1>
@@ -70,25 +106,39 @@
       <% end %>
     </ul>
   </div>
+</div>
 
-
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+<div style=" justify-content: space-between; align-items: flex-start;">
   <div style="flex: 1;">
     <h1><%= t("utenti") %></h1>
-    <ul>
+    
       <% @users.each do |user| %>
-        <% if !user.admin? %>
-          <% if !user.moderator? %>
-            <li><%= t("utente") + "  "+user.full_name %></li>
-            <li><%= link_to t("profilo"), user_path(id: user.id) %></li>
-<li><%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></li>
+        <li>
+        <div style="display: flex; align-items: center;">
+          <div style="margin-right: 10px;">
+            <% if user.moderator? %>
+              <strong>Moderatore:</strong>
+            <% elsif user.admin? %>
+              <strong>Admin:</strong>
+            <% else %>
+              <strong>Utente:</strong>
+            <% end %>
+          </div>
+          <div class="container">
+        <% if user.admin? %>
+           <%=user.full_name%>
+        
+           <% elsif !user.moderator? %>
+           <%= link_to t("profilo"), user_path(id: user.id) %>
+          <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
           <% else %>
-            <li><%= t("mod") + " "+user.full_name %></li>
+            <%= t("mod") + " "+user.full_name %>
           <% end %>
         <% end %>
-      <% end %>
-    </ul>
+    </div>
   </div>
+</div>
+
 
   <div style="flex: 1;">
     <h1><%= t("altro") %></h1>
@@ -99,3 +149,6 @@
 </div>
 
 <%end%>
+
+
+

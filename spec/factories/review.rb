@@ -5,7 +5,7 @@ factory :review, class: Review do
     title {"Harry Potter and the Philosopher's Stone"}
     rating {4}
     comment {"bello"}
-    user
+    user_id {1}
 end
 
 
@@ -24,7 +24,6 @@ factory :rew, class: Review do
     comment {"This is a sample review comment"}
     item_id {12345}
     negozio {"Example Store"}
-    user_id {5}
-    user
+    user_id {6}
 end
 end

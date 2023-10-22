@@ -21,6 +21,18 @@ RSpec.describe ReviewsController, type: :controller do
     end
 
     
+    describe 'Create a Review as user' do
+      context 'A user create a review' do
+        it 'Create a review' do
+          sign_in @user
+          @rese=Review.new(title: "Rocky",rating: 35, comment: "Top", item_id: 555 ,negozio: "Ebay", user_id: @user.id)
+          post :create, params: { user_id: @rese.user_id, id: @rese.id, review: { title: @rese.title, rating: @rese.rating, comment: @rese.comment, item_id: @rese.item_id,  negozio: @rese.negozio, user_id: @rese.user_id}}
+          review=Review.find_by(user_id: @user.id)
+          expect(review).to be_present
+          end
+      end
+      end
+    
    describe 'Update review' do
     context 'A user with valid parameters' do
       it 'update a review' do
@@ -56,7 +68,7 @@ before(:all) do
 end
 
   context "As moderator" do
-    describe 'Destroy areview' do
+    describe 'Destroy a review' do
       context 'As moderator i destroy a review' do
         it 'Destroy a review' do
           sign_in @user

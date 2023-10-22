@@ -1,44 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <style>
+    .language-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .filter-container {
+      float: right; 
+      width: 300px;
+    }
+    .container {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .left-container, .center-container {
+      flex: 1;
+      text-align: left;
+    }
+    .right-container, .center-container {
+      flex: 1;
+      text-aling: right;
+  }
+  </style>
+  <div style="flex: 1; text-align: right;">
+    <%= link_to "Home", root_path %>
+  </div>
+
+</head>
+<body>
+
+
 <% if @user.full_name.present? %>
-	<h3> <%= @user.full_name %> </h3>
-	<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+  <h3><%= @user.full_name %></h3>
+  <%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
 <% else %>
-	<% if @user.avatar.attached?%>
-		<h3> <%= @user.email %> </h3>
-           	<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+  <% if @user.avatar.attached? %>
+    <h3><%= @user.email %></h3>
+    <%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+  <% else %>
+    <h3><%= @user.email %></h3>
+    <%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+  <% end %>
+<% end %>
 
-	<%else %>
-	        <h3> <%= @user.email %> </h3>
-		<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
- 	
- 	<%end %>
-<%end %>
-    <section class="stats">
-      <%= render 'shared/stats' %>
-    </section>
-    <%= render 'users/follow_form' if logged_in? %>
+<section class="stats">
+  <%= render 'shared/stats' %>
+</section>
+
+<%= render 'users/follow_form' if logged_in? %>
+
 <% if user_signed_in? && current_user == @user %>
-<button onclick="window.location.href='/users/<%= current_user.id %>';">Profilo</button>
+  <% resource_name = :user %>
+  <div>
+ <%= button_to t("cancella"), registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+   
+   </div>
+  
+<% end %>
 
-<% resource_name = :user %>
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-<% @user.following.each do |f| %>
-	<h3> <%= f.email%> </h3>
-	<h3> <%= link_to "Profilo" , users_path(f.id) %> </h3>
+<% if (current_user.moderator? || current_user.admin?) && @user != current_user %>
+  <%= button_to t("elimina"), user_path(id: @user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
 <% end %>
-<% end %>
-<%= "Recensioni:" %>
+<div class="container">
+<div class="left-container"> 
+<h3><%= t("recensioni") %></h3>
 <%= render @user.reviews %>
-<p><%= "Ricerche:" %></p>
+</div>
+<div class="center-container"> 
+<h3><p><%= t("ricerche") %></p></h3>
 <% @fresults.each do |record| %>
-    <p><%= "Titolo: "+record.title%></p>
+    <p><h4><%= "Titolo: "+record.title%></h4></p>
     <p><%= "Luogo: "+record.location%></p>
     <p><%= "Prezzo: "+record.price.to_s%></p>
     <p><%= "Feed: "+record.feed.to_i.to_s%></p>
-
-<%= link_to "Vai al prodotto", record.url %>
-<% if current_user==@user %>
-<%= link_to "Elimina" , user_research_path(record.user_id, record), data: {turbo_method: :delete, turbo_confirm:"Are you sure?"}%>
-<%end %>
 <%end%>
+</div>
+<div class="right-container">
+<% if current_user == @user %>
+   <p><%= link_to t("tempo"), ordina_path(user_id: @user.id) %></p>
+   <p><%= link_to t("priceo"), pordina_path(user_id: @user.id) %></p>
+ 
+   <% @user.following.each do |f| %>
+    <h3><%="Amici: "%></h3>
+    <%= f.full_name %> <%= link_to t("vaip"), users_path(id: f.id) %>
+  <% end %>
+ <% end %>
+</div>
+</div>
 
-<h3> <%= link_to "Home", root_path %> </h3>

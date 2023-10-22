@@ -10,6 +10,7 @@ resource :users, except: [:edit, :create, :update]
 
   root 'pages#home'
 
+  get "researches/pordina" , to: "researches#pordina", as:"pordina"
 
   get "researches/ordina" , to: "researches#ordina", as:"ordina"
   get "researches/ofeedordina" , to: "researches#feedordina", as:"feedordina"

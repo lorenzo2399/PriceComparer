@@ -18,7 +18,9 @@ before_action :f_research , only: [:destroy]
 		@research=Research.new
 	end
 		
-	
+	def pordina
+		@presults = Research.where(user_id: @user.id).order(price: :desc)
+	end
 
 	def ordina
 		@results = Research.where(user_id: @user.id).order(time: :desc)
@@ -40,6 +42,9 @@ before_action :f_research , only: [:destroy]
 	
 	def destroy
 		@research.destroy
+		@presults = Research.where(user_id: @user.id).order(price: :desc)
+		
+	
 		@fresults = Research.where(user_id: @user.id).order(feed: :desc)
 
 		@results = Research.where(user_id: @user.id).order(time: :desc)

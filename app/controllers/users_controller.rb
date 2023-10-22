@@ -40,7 +40,7 @@ end
     else
       flash[:error] = "Impossibile eliminare l'utente."
     end
-    if current_user.admin?
+    if current_user.admin? || current_user.moderator?
       redirect_to admin_board_path
     else
       redirect_to root_path

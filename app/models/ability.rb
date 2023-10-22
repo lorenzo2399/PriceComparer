@@ -27,6 +27,8 @@ if user.present?
     can :create, Message, user_id: user.id
     can :feedordina, Research, user_id: user.id
     can :ordina, Research, user_id: user.id
+    can :pordina, Research, user_id: user.id
+
 end
 
 if user.moderator?
@@ -35,6 +37,9 @@ if user.moderator?
     can :destroy, Review
     can :update, Review
     can :read, Review
+    can :create, Review
+    can :create, Research
+    can :destroy, Research
     can :read, Research
     can :destroy, Message
     can :admin_board, User

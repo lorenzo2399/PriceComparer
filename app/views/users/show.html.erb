@@ -1,3 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <style>
+    .language-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .filter-container {
+      float: right; 
+      width: 300px;
+    }
+    .container {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .left-container, .center-container {
+      flex: 1;
+      text-align: left;
+    }
+    .right-container, .center-container {
+      flex: 1;
+      text-aling: right;
+  }
+  </style>
+  <div style="flex: 1; text-align: right;">
+    <%= link_to "Home", root_path %>
+  </div>
+
+</head>
+<body>
+
+
 <% if @user.full_name.present? %>
   <h3><%= @user.full_name %></h3>
   <%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
@@ -20,31 +58,41 @@
 <% if user_signed_in? && current_user == @user %>
   <% resource_name = :user %>
   <div>
-    Unhappy? <%= button_to t("cancella"), registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
-  </div>
-  <% @user.following.each do |f| %>
-    <h3><%= f.full_name %></h3>
-    <h3><%= link_to t("profilo"), users_path(id: f.id) %></h3>
-  <% end %>
+ <%= button_to t("cancella"), registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+   
+   </div>
+  
 <% end %>
 
 <% if (current_user.moderator? || current_user.admin?) && @user != current_user %>
   <%= button_to t("elimina"), user_path(id: @user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
 <% end %>
-
+<div class="container">
+<div class="left-container"> 
 <h3><%= t("recensioni") %></h3>
 <%= render @user.reviews %>
-
+</div>
+<div class="center-container"> 
 <h3><p><%= t("ricerche") %></p></h3>
 <%= render @user.researches %>
-
+</div>
+<div class="right-container">
 <% if current_user == @user %>
-  <%= link_to t("tempo"), ordina_path(user_id: @user.id) %>
-  <%= link_to t("feed"), feedordina_path(user_id: @user.id) %>
-<% end %>
+   <p><%= link_to t("tempo"), ordina_path(user_id: @user.id) %></p>
+   <p><%= link_to t("fordi"), feedordina_path(user_id: @user.id) %></p>
+   <p><%= link_to t("priceo"), pordina_path(user_id: @user.id) %></p>
+ 
+   <% @user.following.each do |f| %>
+    <h3><%="Amici: "%></h3>
+    <%= f.full_name %> <%= link_to t("vaip"), users_path(id: f.id) %>
+  <% end %>
+ <% end %>
+</div>
+</div>
 
 
 
 
-<h3><%= link_to "Home", root_path %></h3>
+
+
 

@@ -21,6 +21,7 @@ RSpec.describe MessagesController, type: :controller do
     end
  
     
+    
    describe 'Create a Message' do
     context 'A user create a message' do
       it 'Create message' do
@@ -38,6 +39,11 @@ RSpec.describe MessagesController, type: :controller do
 
     context "As admin" do
 
+      before(:all) do
+        User.all.each do |users|
+          users.destroy
+        end
+      end
         before(:all) do
             @user = create(:admin)
             @user.save
@@ -47,7 +53,8 @@ RSpec.describe MessagesController, type: :controller do
             context 'As a admin resolve a message' do
               it 'Resolve message' do
                 sign_in @user
-                @mess=Message.create(content: "aiuto", user_id:@user.id)
+                @utente=FactoryBot.create(:user)
+                @mess=Message.create(content: "aiuto", user_id:@utente.id)
                 get :destroy , params: {user_id: @mess.user_id, id: @mess.id}
                 expect(Message.exists?(@mess.id)).to be false
 
@@ -55,4 +62,32 @@ end
 end
 end
 end
+
+context "As moderator" do
+  before(:all) do
+		User.all.each do |users|
+			users.destroy
+		end
+	end
+
+  before(:all) do
+      @user = create(:moderator)
+      @user.save
+    end
+
+  describe 'Resolve a Message' do
+      context 'As a moderato resolve a message' do
+        it 'Resolve message' do
+          sign_in @user
+          @utente=FactoryBot.create(:user)
+
+          @mess=Message.create(content: "aiuto", user_id:@utente.id)
+          get :destroy , params: {user_id: @mess.user_id, id: @mess.id}
+          expect(Message.exists?(@mess.id)).to be false
+
+end
+end
+end
+end
+
 end

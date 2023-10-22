@@ -79,3 +79,6 @@ en:
  pass: "(leave blank if you don't want to change it)"
  cpass: "(we need your current password to confirm your changes)"
  time: "Handling time: "
+ vaip: "Profile"
+ fordi: "Order by feed"
+ priceo: "Ordina by price"

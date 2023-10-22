@@ -7,6 +7,7 @@ before_action :f_user
 before_action :f_research , only: [:destroy]
 
 	def new
+		@user_id=params[:user_id]
 		@item_id=params[:item_id]
 		@price=params[:price]
         @location=params[:location]
@@ -25,12 +26,11 @@ before_action :f_research , only: [:destroy]
       
 	def create
 		@research= Research.new(research_params)
-		@research.user_id=@user.id
 		if @research.save
 			flash[:notice] = 'review saved successfully'
 			redirect_to user_path(current_user)
 		else 
-		    flash[:alert] = 'Errore'
+			flash[:alert] = 'Errore'
 		end
 	end
 	
@@ -50,7 +50,7 @@ before_action :f_research , only: [:destroy]
 	private
 	
 	def research_params
-		params.require(:research).permit(:title,:price, :location, :item_id, :url, :feed, :time)
+		params.require(:research).permit(:title,:price, :location, :item_id, :url, :feed, :time, :user_id)
 	end
 	
 	def f_user

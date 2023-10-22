@@ -1,7 +1,14 @@
 <div style="text-align: right;">
-    <%= link_to "Profilo", user_path(@user.id) %>
     <%= link_to "Home", root_path %>
-
+    <% if current_user && current_user.admin?%>
+	<%= link_to "Admin", admin_board_path %>
+    <%end %>
+    <% if current_user && current_user.moderator?%>
+	<%= link_to "Moderator", admin_board_path %>
+    <%end%>
+        <% if current_user && (!current_user.admin? && !current_user.moderator?) %>
+          <%= link_to t("assistenza"), new_user_message_path(current_user.id) %> 
+    <%end%>
   </div> 
 
 <div style="flex: 1; text-align: left;"> 
@@ -11,7 +18,8 @@
         <h4><%= current_user.full_name.present? ? current_user.full_name : current_user.email %></h4>
       </div>
       <div>
-      <%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+      <button onclick="window.location.href='/users/<%= current_user.id %>';"><%=t("Profilo")%></button>
+	<%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
       </div>
     <% else %>
       <%= link_to "Login", new_user_session_path %> 
@@ -32,13 +40,13 @@
             <%= t("time") + item["time"].to_s %>
             <%= t("price") + item["price"].to_s + item["currency"] %>
             <p><%= "Negozio: " + item["negozio"] %> <%= t("location") + item["location"] %></p>
-            <p><%= t("link") %> <%= link_to t("vai"), item["url"] %></p>
+            <p><%= t("link") %> <%= link_to t("vai"), item["url"] , target: '_blank' %></p>
             <% if item["iexp"] == "true" %>
               <%= t("iexp") %>
             <% end %>
             <% if @researches_item_id != nil %>
               <% if current_user && !@researches_item_id.include?(item["item_id"].to_i) %>
-                <%= link_to t("save"), new_user_research_path(current_user.id, title: item["title"], price: item["price"], location: item["location"], item_id: item["item_id"], url: item["url"], feed: item["feed"].to_i, time: item["time"].to_i) %>
+                <%= link_to t("save"), new_user_research_path(current_user.id, title: item["title"], price: item["price"], location: item["location"], item_id: item["item_id"], url: item["url"], feed: item["feed"].to_i, time: item["time"].to_i, user_id: current_user.id) %>
               <% end %>
             <% end %>
             <% if @resitem != nil %>
@@ -50,7 +58,7 @@
             <% end %>
             <% if @reviews_item_id != nil %>
               <% if current_user && !@reviews_item_id.include?(item["item_id"].to_i) %>
-                <%= link_to t("rec"), new_user_review_path(current_user.id, negozio: item["negozio"], title: item["title"], item_id: item["item_id"]) %>
+                <%= link_to t("rec"), new_user_review_path(current_user.id, negozio: item["negozio"], title: item["title"], item_id: item["item_id"], user_id: current_user.id) %>
               <% end %>
             <% end %>
           </div>
@@ -60,6 +68,8 @@
       <h2><%= t("nores") %></h2>
     <% end %>
   </div>
+
+
 
   <div style="flex-basis: 300px;">
     <%= form_tag(search_path, method: :get) do %>

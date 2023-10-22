@@ -8,6 +8,7 @@ before_action :f_review , only: [:destroy, :edit, :update,]
 
 
 	def new
+		@user_id=params[:user_id]
 		@negozio=params[:negozio]
 		@item_id=params[:item_id]
 		@title=params[:title]
@@ -17,11 +18,11 @@ before_action :f_review , only: [:destroy, :edit, :update,]
 	
 	def create
 		@review= Review.new(review_params)
-		@review.user_id=@user.id
 		if @review.save
 			flash[:notice] = 'review saved successfully'
 			redirect_to user_path(current_user)
 		else 
+			puts @review.errors.full_messages
 		    flash[:alert] = 'Errore'
 		end
 	end
@@ -46,7 +47,7 @@ before_action :f_review , only: [:destroy, :edit, :update,]
 	private
 	
 	def review_params
-		params.require(:review).permit(:title,:rating, :comment, :item_id, :negozio)
+		params.require(:review).permit(:title,:rating, :comment, :item_id, :negozio, :user_id)
 	end
 	
 	def f_user

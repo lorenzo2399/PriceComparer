@@ -1,7 +1,7 @@
-<p><%= review.title %></p>
-<p><%= review.rating %></p>
-<p><%= review.comment %></p>
-<p><%= review.negozio %></p>
+<p><%= t("titolo") +review.title %></p>
+<p><%= "Rating: "+review.rating.to_s %></p>
+<p><%= "Commento: "+review.comment %></p>
+<p><%= "Negozio: "+review.negozio %></p>
 
 
 <% if current_user==@user  || current_user.moderator? || current_user.admin?%>

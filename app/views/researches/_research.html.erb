@@ -1,12 +1,12 @@
-<p><%= t("titolo")+research.title%></p> 
+<p><%= t("titolo")+research.title%></p>
 <p><%= t("location")+research.location%></p> 
 <p><%=t("price")+research.price.to_s%></p> 
 <p><%= t("feed")+research.feed.to_i.to_s%></p> 
 <p><%=t("time")+research.time.to_i.to_s%></p> 
-<%= link_to t("vai"), research.url %>
 
-<% if current_user==@user  || @user.moderator? || @user.admin?%>
+<% if current_user==research.user_id  || current_user.moderator? || current_user.admin?%>
 <%= link_to t("elimina") , user_research_path(research.user_id, research), data: {turbo_method: :delete, turbo_confirm:"Are you sure?"}%>
+<%= link_to t("vai"), research.url %>
 
 
 <%end %>

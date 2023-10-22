@@ -1,5 +1,7 @@
 <h3><%= t("messaggio")%></h3>
 <%= form_for [current_user, Message.new] do |f| %>
+    <%= f.hidden_field :user_id, value: @user_id %>
+
     <%= f.label t("content") %>
 	<p><%= f.text_area :content%></p>
 

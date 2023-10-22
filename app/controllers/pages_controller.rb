@@ -20,11 +20,11 @@ class PagesController < ApplicationController
   end
 
   def cambia 
-  locale = params[:locale].to_sym
-  I18n.locale = locale
-  session[:select_l] = I18n.locale
-  redirect_to root_path
-end
+      locale = params[:locale].to_sym
+      I18n.locale = locale
+      session[:select_l] = I18n.locale
+      redirect_to root_path
+  end
   
 
 def search
@@ -52,9 +52,9 @@ def search
     chiamatad=Callerdummy.new
     chiamata = Caller.new
     @search_results =chiamata.cerca(params[:keyword], params[:sort_order], params[:minprice].to_i, params[:maxprice].to_i,params[:instaexp].to_i, params[:place],params[:minf], params[:maxtime])
-    semi=chiamatad.cerca
+    @semi=chiamatad.cerca
 
-    @search_dummy=semi["products"]
+    @search_dummy=@semi["products"]
     @risultato=[]
 
     
@@ -73,7 +73,7 @@ def search
             timed=rand(5)+1
             iexp=rand(2)
             currency= " USD"
-            urld="random"
+            urld="https://dummyjson.com/"
             if item["price"]<@minprice || item["price"]>@maxprice || feedm<@minf.to_i || timed>@maxtime.to_i || iexp!=@instaexp
               next
             end
@@ -107,7 +107,7 @@ def search
             time=item["shippingInfo"][0]["handlingTime"][0].to_i
             price=item["sellingStatus"][0]["currentPrice"][0]["__value__"]
             currency=item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] 
-            url=item["viewItemURL"][0] 
+            url="https://www.ebay.it/"
             location=item["location"][0] + "  " + item["country"][0]
             iexp=item["listingInfo"][0]["buyItNowAvailable"][0]=="true" 
             itemid=item["itemId"][0].to_i

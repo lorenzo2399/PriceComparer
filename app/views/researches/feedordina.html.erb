@@ -17,7 +17,7 @@
     </section>
     <%= render 'users/follow_form' if logged_in? %>
 <% if user_signed_in? && current_user == @user %>
-<button onclick="window.location.href='/user/<%= current_user.id %>';">Profilo</button>
+<button onclick="window.location.href='/users/<%= current_user.id %>';">Profilo</button>
 
 <% resource_name = :user %>
 <div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>

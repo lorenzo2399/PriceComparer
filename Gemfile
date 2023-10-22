@@ -17,11 +17,11 @@ group :test do
   gem "rspec-rails"
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem "capybara"
+  gem 'rails-controller-testing'
+  gem "selenium-webdriver"
+  gem "webdrivers"
 end
-
-gem "cancancan"
-
-gem "i18n", "~> 1.13.0"
 
 gem "rexml"
 
@@ -31,7 +31,7 @@ gem "puma", "~> 5.0"
 #Per far funzionare il view con formati .haml
 gem 'haml'
 
-
+gem "ffi" ,"~> 1.16.3"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -39,7 +39,9 @@ gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 
+gem "timeout", "~> 0.4.0"
 
+gem "rack" ,"~> 2.2.8"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
@@ -84,12 +86,7 @@ group :development do
   # gem "spring"
 end
 
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
-  gem "webdrivers"
-end
+
 
 gem 'devise'
 gem 'omniauth'
@@ -98,3 +95,6 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "httparty"
 gem "json"
 gem "dotenv-rails"
+gem "cancancan"
+gem "i18n"
+gem "activesupport", "~> 7.0.8"

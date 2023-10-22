@@ -1,6 +1,8 @@
 <h3><%= "Sei sicuro di voler salvare la ricerca?"%></h3>
 <%= form_for [current_user, Research.new] do |f| %>
     <%= f.hidden_field :title, value: @title %>
+    <%= f.hidden_field :user_id, value: @user_id %>
+
     <%= f.hidden_field :price, value: @price %>
     <%= f.hidden_field :location, value: @location %>
     <%= f.hidden_field :item_id, value: @item_id %>

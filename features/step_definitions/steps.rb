@@ -107,7 +107,7 @@ When('I click on Review button') do
     click_link("Fai una recensione", match: :first)
 end
 
-When('I am redirected to review page {string}') do |string|
+Then('I am redirected to review page {string}') do |string|
   expect(current_url).to match(string)
 end
 
@@ -120,15 +120,15 @@ When('I press the submit button') do
   click_button("Invia")
 end
 
-When('I am redirected to personal page {string}') do |string|
+Then('I am redirected to personal page {string}') do |string|
   expect(current_url).to match(string)
 end
 
-Then('i should see the Review {string} on personale page') do |string|
+And('i should see the Review {string} on personale page') do |string|
   expect(page).to have_content(string)
 end
 
-Then('i should see the rating {int} on personal page') do |int|
+And('i should see the rating {int} on personal page') do |int|
  expect(page).to have_content(int)
 end
 
@@ -138,24 +138,25 @@ And ("A review should be added to database") do
 end
 
 Given('I have a review') do
-  @review=FactoryBot.create(:review)
+  @review=Review.new(title: "Rocky",rating: 35, comment: "Top", item_id: 555 ,negozio: "Ebay", user_id: @user.id)
+  @review.save
 end
 
 
-When('i am on my personal page') do
+And('i am on my personal page') do
   visit "http://127.0.0.1:3000/users/1"
 end
 
-And('i click modify button') do
+When('i click modify button') do
   click_link("Modifica", match: :first)
 
 end
 
-When('i am redirect to {string}') do |string|
+Then('i am redirect to {string}') do |string|
   expect(current_url).to match(string)
 end
 
-When('i fill the form with {int} and {string}') do |int, string|
+And('i fill the form with {int} and {string}') do |int, string|
   fill_in 'review_rating', with: int
   fill_in 'review_comment', with: string
   end
@@ -166,24 +167,24 @@ When('I press the button Invia') do
   click_button("Invia")
 end
 
-When('i m redirected to {string}') do |string|
+Then('i m redirected to {string}') do |string|
   expect(current_url).to match(string)
 end
 
-Then('i should not see {int} rating') do |int|
+And('i should not see {int} rating') do |int|
   expect(page).not_to have_text(int.to_s)
 end
 
-Then('i should not see {string} rating') do |string|
+And('i should not see {string} rating') do |string|
   expect(page).not_to have_text(string)
 end
 
 
-Then('i should see {string} comment') do |string|
+And('i should see {string} comment') do |string|
   expect(page).to have_text(string)
 end
 
-Then ("i should see {int} rating") do |int|
+And ("i should see {int} rating") do |int|
   expect(page).to have_text(int.to_s)
 end
 

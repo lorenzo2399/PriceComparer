@@ -1,46 +1,50 @@
 <% if @user.full_name.present? %>
-	<h3> <%= @user.full_name %> </h3>
-	<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+  <h3><%= @user.full_name %></h3>
+  <%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
 <% else %>
-	<% if @user.avatar.attached?%>
-		<h3> <%= @user.email %> </h3>
-           	<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+  <% if @user.avatar.attached? %>
+    <h3><%= @user.email %></h3>
+    <%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+  <% else %>
+    <h3><%= @user.email %></h3>
+    <%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
+  <% end %>
+<% end %>
 
-	<%else %>
-	        <h3> <%= @user.email %> </h3>
-		<%= image_tag(@user.avatar_thumbnail, :width => '200px') %>
- 	
- 	<%end %>
-<%end %>
-    <section class="stats">
-      <%= render 'shared/stats' %>
-    </section>
-    <%= render 'users/follow_form' if logged_in? %>
+<section class="stats">
+  <%= render 'shared/stats' %>
+</section>
+
+<%= render 'users/follow_form' if logged_in? %>
+
 <% if user_signed_in? && current_user == @user %>
-<% resource_name = :user %>
-<div>Unhappy? <%= button_to t("cancella"), registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-
-<div align="right">
-<% @user.following.each do |f| %>
-	<h4><%= "Amici:" %></h4>
-	<ul><%= f.full_name%> 
-	 <%= link_to t("profilo") , users_path(id: f.id) %> 
-	</ul>
-<% end %>
-</div>
+  <% resource_name = :user %>
+  <div>
+    Unhappy? <%= button_to t("cancella"), registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+  </div>
+  <% @user.following.each do |f| %>
+    <h3><%= f.full_name %></h3>
+    <h3><%= link_to t("profilo"), users_path(id: f.id) %></h3>
+  <% end %>
 <% end %>
 
-<% if (current_user.moderator? || current_user.admin?) && @user!=current_user%>
-<%= button_to t("elimina"), user_path(id: @user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-<%end %>
-<%= t("recensioni") %>
+<% if (current_user.moderator? || current_user.admin?) && @user != current_user %>
+  <%= button_to t("elimina"), user_path(id: @user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+<% end %>
+
+<h3><%= t("recensioni") %></h3>
 <%= render @user.reviews %>
-<p><%= t("ricerche") %></p>
-<%= render @user.researches %>
-<% if current_user==@user %>
-<%= link_to t("tempo") , ordina_path(user_id: @user.id) %> 
-<%= link_to t("feed") , feedordina_path(user_id: @user.id) %> 
 
-<%end %>
-<h3> <%= link_to "Home", root_path %> </h3>
+<h3><p><%= t("ricerche") %></p></h3>
+<%= render @user.researches %>
+
+<% if current_user == @user %>
+  <%= link_to t("tempo"), ordina_path(user_id: @user.id) %>
+  <%= link_to t("feed"), feedordina_path(user_id: @user.id) %>
+<% end %>
+
+
+
+
+<h3><%= link_to "Home", root_path %></h3>
+

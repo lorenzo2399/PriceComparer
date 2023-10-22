@@ -15,7 +15,7 @@
       width: 300px;
     }
   </style>
-  <h1> <p align="center"> Home</h1>
+  <h1> <p align="center"> PriceComparer</h1>
 </head>
 <body>
 
@@ -29,6 +29,7 @@
       <div>
 	<%= link_to "Edit Account", edit_user_registration_path %>
 	<%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+
       </div>
     <% else %>
       <%= link_to "Login", new_user_session_path %> 
@@ -82,7 +83,6 @@
   </div>
 </div>
 
-
 <% if current_user%>
 <div align="right">
 <h1><%=t("lista")%></h1>
@@ -98,9 +98,12 @@
 <!-- Lingua e assistenza-->
 <div class="language-container">
   <div style="text-align: left;">
-    <% if current_user && current_user.admin?%>
-    <%= link_to "Admin", admin_board_path %>
-    <%end%>
+  <% if current_user && current_user.admin?%>
+	<%= link_to "Admin", admin_board_path %>
+  <%end %>	
+  <% if current_user && current_user.moderator?%>
+	<%= link_to "Moderator", admin_board_path %>
+  <%end %>		
     <%= link_to "Inglese", cambia_path(locale: :en) %>
     <%= link_to "Italiano", cambia_path(locale: :it) %>
     <% if current_user && current_user.role==0 %>

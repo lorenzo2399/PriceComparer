@@ -32,7 +32,11 @@ before_action :f_review , only: [:destroy, :edit, :update,]
 		
 	def update
 		if @review.update(review_params)
+			if @user.moderator? || @user.admin?
+				redirect_to user_path(@review.user_id)
+			else
 			redirect_to user_path(@user.id)
+		    end
 		else 
 			render "edit"
 		end

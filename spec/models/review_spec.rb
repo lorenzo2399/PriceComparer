@@ -8,8 +8,6 @@ RSpec.describe Review, type: :model do
   it 'is valid with valid attributes' do
     @prova=FactoryBot.build(:reviewa)
     @prova.save
-    puts @prova.user_id
-    puts @prova.errors.full_messages
     expect(@prova).to be_valid
   end
 

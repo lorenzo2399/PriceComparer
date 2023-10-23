@@ -67,7 +67,6 @@ context "any user" do
         expect(assigns(:minf)).to eq('0')
         expect(assigns(:maxtime)).to eq('10')
 
-        # Add more expectations for other instance variables as needed
 
         expect(response).to render_template(:search)
       end
@@ -77,7 +76,6 @@ context "any user" do
     describe 'GET #search' do
       it 'assigns a non-empty @search_results' do
         sign_in @user
-        # Stub the external service that is being called in the controller
         controller_instance = PagesController.new
     allow(controller_instance).to receive(:search)
 

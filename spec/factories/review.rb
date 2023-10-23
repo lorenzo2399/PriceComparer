@@ -26,4 +26,14 @@ factory :rew, class: Review do
     negozio {"Example Store"}
     user_id {6}
 end
+
+factory :rewa, class: Review do
+    title {'Sample Review Title'}
+    rating {5}
+    comment {"This is a sample review comment"}
+    item_id {12345}
+    negozio {"Example Store"}
+    user_id {2}
+end
+
 end

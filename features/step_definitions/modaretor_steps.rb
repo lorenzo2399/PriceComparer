@@ -53,7 +53,7 @@ end
 end
   
   When('i click on the user profile') do
-    click_link("Profilo", match: :first)
+    click_link("Profilo Utente", match: :first)
 
 end
   

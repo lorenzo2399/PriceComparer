@@ -76,7 +76,8 @@ Then ("the user should not be a moderator") do
 end
 
 Given ("there is a user and has a review") do
-    @rece=FactoryBot.create(:reviewa)
+    @user=FactoryBot.create(:usera)
+    @rece=FactoryBot.create(:rewa)
 end
 
 And ("I am on admin board") do   
@@ -84,7 +85,7 @@ And ("I am on admin board") do
 end
 
 When('i click on profilo of a user') do
-    click_link("Profilo", match: :first)
+    click_link("Profilo Utente", match: :first)
 end
   
   Then('I should be redirected to user s profilo') do
@@ -92,6 +93,7 @@ end
 end
   
   When('i click on elimina review button') do
+    puts page.body
     click_link("Elimina", match: :first)
 end
     

@@ -8,7 +8,19 @@
     column-gap: 20px;
     justify-content: space-between;
   }
+  .language-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px;
+    }
   </style>
+  <div style="flex: 1; text-align: right;">
+    <%= link_to "Home", root_path %>
+    <%= link_to t("profilo"), user_path(current_user.id)%>
+    <%= link_to "Edit Account", edit_user_registration_path %>
+    <%= link_to "Logout", destroy_user_session_path, 'data-turbo-method': :delete%>  </div>
+    </div> 
   </head>
 <body>
 
@@ -60,7 +72,7 @@
             <%= user.full_name %>
                 <% if !user.admin? %>
                   <% if !user.moderator? %>
-                  <%= link_to t("profilo"), user_path(id: user.id) %>
+                  <%= link_to t("profilou"), user_path(id: user.id) %>
                   <%= link_to t("modmake"), set_mod_path(id: user.id) %>
       <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
                               
@@ -77,15 +89,18 @@
         </div>
       </div>
 
-
-  <div style="flex: 1;">
-    <h1><%= t("altro") %></h1>
-    <ul>
-      <li><%= link_to "Home", root_path %></li>
-    </ul>
-  </div>
-</div>
-
+      <!-- Lingua e assistenza-->
+      <div class="language-container">
+        <div style="flex: 1; text-align: left; position: fixed;
+        bottom: 0;">
+      
+          <%= link_to "Inglese", cambia_path(locale: :en) %>
+          <%= link_to "Italiano", cambia_path(locale: :it) %>
+          
+        </div>
+      </div>
+      </body>
+      </html>
 <%else %>
 
 <h1><%= "Moderator Board" %></h1>
@@ -103,6 +118,10 @@
     </ul>
   </div>
 </div>
+
+
+ 
+
 
 <div style=" justify-content: space-between; align-items: flex-start;">
   <div style="flex: 1;">
@@ -125,7 +144,7 @@
            <%=user.full_name%>
         
            <% elsif !user.moderator? %>
-           <%= link_to t("profilo"), user_path(id: user.id) %>
+           <%= link_to t("profilou"), user_path(id: user.id) %>
           <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
           <% else %>
             <%= t("mod") + " "+user.full_name %>
@@ -134,16 +153,23 @@
     </div>
   </div>
 </div>
+    
 
 
-  <div style="flex: 1;">
-    <h1><%= t("altro") %></h1>
-    <ul>
-      <li><%= link_to "Home", root_path %></li>
-    </ul>
+
+
+<!-- Lingua e assistenza-->
+<div class="language-container">
+  <div style="flex: 1; text-align: left; position: fixed;
+  bottom: 0;">
+
+    <%= link_to "Inglese", cambia_path(locale: :en) %>
+    <%= link_to "Italiano", cambia_path(locale: :it) %>
+    
   </div>
 </div>
-
+</body>
+</html>
 <%end%>
 
 

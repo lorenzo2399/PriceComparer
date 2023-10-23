@@ -54,7 +54,7 @@
             <%= t("feed") + item["feed"].to_s %>
             <%= t("time") + item["time"].to_s %>
             <%= t("price") + item["price"].to_s + item["currency"] %>
-            <p><%= "Negozio: " + item["negozio"] %> <%= t("location") + item["location"] %></p>
+            <p><%= t("negozio") + item["negozio"] %> <%= t("luogo") + item["location"] %></p>
             <p><%= t("link") %> <%= link_to t("vai"), item["url"] , target: '_blank' %></p>
             <% if item["iexp"] == "true" %>
               <%= t("iexp") %>

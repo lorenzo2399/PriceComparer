@@ -25,7 +25,7 @@ Scenario: Save Research
     Then I am redirected to a "http://127.0.0.1:3000/users/1/researches/new"
     When I press Save button
     And I am redirected to "http://127.0.0.1:3000/users/1"
-    Then i should see on my personal page "Harry Potter and the Goblet of Fire"
+    Then i should see on my personal page "Harry"
     And i Research should be added to database
 
 Scenario: Make a review

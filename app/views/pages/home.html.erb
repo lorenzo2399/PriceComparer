@@ -28,16 +28,14 @@
       </div>
       <div>
 	<%= link_to "Edit Account", edit_user_registration_path %>
-	<%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
-
-      </div>
+  <%= link_to "Logout", destroy_user_session_path, 'data-turbo-method': :delete%>  </div>
     <% else %>
       <%= link_to "Login", new_user_session_path %> 
       <%= link_to "Crea Account", new_user_registration_path %> 
     <% end %>
 
     <% if current_user %>
-    <button onclick="window.location.href='/users/<%= current_user.id %>';"><%=t("Profilo")%></button>
+    <%= link_to t("profilo"), user_path(@user.id)%>
     <%end %>
   </div>
 </div>

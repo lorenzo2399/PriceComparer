@@ -20,10 +20,9 @@ context "As user" do
     
   end
 
-  it 'is  not valid without content' do
-    @user=FactoryBot.build(:user)
-    @user.save
-    puts @user.errors.full_messages
+  it 'is  not valid following itself' do
+    @user=FactoryBot.create(:user)
+    
     @rela=Relationship.create(follower_id: @user.id,followed_id: @user.id)
     expect(@rela).not_to be_valid
 

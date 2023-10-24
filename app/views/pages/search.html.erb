@@ -105,7 +105,7 @@
       <p><%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %></p>
       <%= label_tag :instaexp, t("iexp") %>
       <%= check_box_tag "instaexp", 1, false %>
-      <p><%= text_field_tag :place, params[:place], placeholder: t("place") %></p>
+      <p><%= text_field_tag :place, params[:place], placeholder: t("luogo") %></p>
       <p><%= label_tag :maxtime, t("time") %></p>
       <%= number_field_tag :maxtime, params[:maxtime], :value => 30, min: 1 %>
       <%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"], ["Tempo", "Time"], ["Feedback", "Feed"]], params[:sort_order]), prompt: t("ordine") %>

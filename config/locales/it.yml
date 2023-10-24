@@ -11,7 +11,7 @@ it:
  risultati: "Risultati trovati:"
  feed: "Feedback venditore: "
  time: "Tempo di attesa:"
- price: "Prezzo:"
+ price: "Prezzo: "
  link: "Link prodotto:"
  vai : "Vai al prodotto"
  iexp: "Disponibilità immediata"
@@ -56,3 +56,4 @@ it:
  cancella: "Cancella Account"
  risultati: "Consigliato:"
  nrichieste: "Numero di richieste: "
+ risultato: "Risultati:"

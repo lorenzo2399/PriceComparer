@@ -48,14 +48,14 @@
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
   <div style="flex: 1;">
     <% if @risultato.present? %>
-      <h2><%= t("risultati") %></h2>
+      <h2><%= t("risultato") %></h2>
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center;">
         <% @risultato.each do |item| %>
           <div class="result-item">
             <h3><%= item["title"] %></h3>
             <p><%=image_tag 'ricerca.png', width: "50%"%></p>
 
-            <%= t("feed") + item["feed"].to_s %>
+            <p><%= t("feed") + item["feed"].to_s %></p>
             <%= t("time") + item["time"].to_s %>
             <%= t("price") + item["price"].to_s + item["currency"] %>
             <p><%= t("negozio") + item["negozio"] %> <%= t("luogo") + item["location"] %></p>

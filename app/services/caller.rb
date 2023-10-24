@@ -1,7 +1,7 @@
 class Caller
 
 def find_by_category(categoria)
-	  
+
   if categoria=="Elettronica"
     @id="43304"
   

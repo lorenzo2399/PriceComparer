@@ -47,9 +47,9 @@
     <ul>
       <li><%= t("numute") + @users.count.to_s %></li>
       <li><%= t("nurece") + @reviews.count.to_s %></li>
+      <li><%= t("ricesa") + @researches.count.to_s %></li>
       <li><%= t("nrichieste") + @messages.count.to_s %></li>
 
-      <li><%= t("ricesa") + @researches.count.to_s %></li>
     </ul>
   </div>
 </div>
@@ -92,15 +92,7 @@
 </div>
         
 
-      <!-- Lingua e assistenza-->
-      <div class="language-container">
-        <div style="text-align: left;">
-      
-          <%= link_to "Inglese", cambia_path(locale: :en) %>
-          <%= link_to "Italiano", cambia_path(locale: :it) %>
-          
-        </div>
-      </div>
+     
 <%else %>
 
 <h1><%= "Moderator Board" %></h1>
@@ -158,15 +150,7 @@
 
 
 
-<!-- Lingua e assistenza-->
-<div class="language-container">
-  <div style="text-align: left;">
-
-    <%= link_to "Inglese", cambia_path(locale: :en) %>
-    <%= link_to "Italiano", cambia_path(locale: :it) %>
-    
-  </div>
-</div>
+<
 </body>
 </html>
 <%end%>

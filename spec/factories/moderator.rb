@@ -4,5 +4,6 @@ FactoryBot.define do
         password {"antonio"}
         role {2}
         full_name {"Giuseppe"}
+        favorite_category {"Moda"}
     end
 end

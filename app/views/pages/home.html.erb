@@ -53,7 +53,6 @@
         <% @search_results.each do |item| %>
             <h3><%= item["title"][0] %></h3>
             <p><%=t("price")%> <%= item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
-            <%= t("categoria")%> <%=@categoria%>
         <% end %>
       </ul>
     <% else %>

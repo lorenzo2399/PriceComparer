@@ -36,8 +36,8 @@ context "any user" do
       end
 
       it "does not assign search results if the user has no favorite category" do
-        sign_in @user
-        @user.update(favorite_category: "nessuna categoria")
+        @utente=FactoryBot.create(:userc)
+        sign_in @utente
         get :home
         expect(assigns(:search_results)).to be_nil
       end

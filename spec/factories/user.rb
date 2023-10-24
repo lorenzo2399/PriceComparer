@@ -23,6 +23,14 @@ FactoryBot.define do
         full_name {"antonio"}
         favorite_category {"Elettronica"}
     end
+
+    factory :userc, class: User do    
+        email { "blabla@hotmail.it"}
+        password {"antonio"}
+        role {0}
+        full_name {"antonio"}
+        favorite_category {""}
+    end
 end
 
   

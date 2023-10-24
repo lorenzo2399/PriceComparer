@@ -22,15 +22,12 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    @message = Message.where(user_id: params[:user_id])
-    @message.each do |message|
-     
-    if  message.destroy
+    if  @message.destroy
       flash[:success] = "Richiesta risolta con successo."
     else
       flash[:error] = "Impossibile risolvere richiesta."
     end
-    end   
+     
     redirect_to admin_board_path
   end
  

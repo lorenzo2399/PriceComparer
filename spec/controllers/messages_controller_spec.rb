@@ -76,7 +76,7 @@ context "As moderator" do
     end
 
   describe 'Resolve a Message' do
-      context 'As a moderato resolve a message' do
+      context 'As a moderator resolve a message' do
         it 'Resolve message' do
           sign_in @user
           @utente=FactoryBot.create(:user)

@@ -12,7 +12,7 @@ class PagesController < ApplicationController
 	 if (current_user)
 	    @user=current_user
 		  categoria=@user.favorite_category
-		  if !categoria.empty? 
+		  if categoria!=nil && !categoria.empty? 
         call = Caller.new
         @search_results =call.find_by_category(categoria)
 		  end

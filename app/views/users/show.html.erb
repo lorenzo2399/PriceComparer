@@ -63,7 +63,7 @@
 <% if user_signed_in? && current_user == @user %>
   <% resource_name = :user %>
   <div>
- <%= button_to t("cancella"), registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+  <%= button_to t("cancella"), user_path(id: @user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
    
    </div>
   

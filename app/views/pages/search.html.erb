@@ -53,6 +53,8 @@
         <% @risultato.each do |item| %>
           <div class="result-item">
             <h3><%= item["title"] %></h3>
+            <p><%=image_tag 'ricerca.png', width: "50%"%></p>
+
             <%= t("feed") + item["feed"].to_s %>
             <%= t("time") + item["time"].to_s %>
             <%= t("price") + item["price"].to_s + item["currency"] %>

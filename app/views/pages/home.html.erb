@@ -52,6 +52,7 @@
       <h2><%=t("risultati")%></h2>
         <% @search_results.each do |item| %>
             <h3><%= item["title"][0] %></h3>
+            <p><%=image_tag 'ricerca.png'%></p>
             <p><%=t("price")%> <%= item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
         <% end %>
       </ul>

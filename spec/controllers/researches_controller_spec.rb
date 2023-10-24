@@ -44,5 +44,26 @@ RSpec.describe ResearchesController, type: :controller do
           end
         end
     end
+
+    describe 'Order some Researches' do
+      context 'A user i want to order some reasearches' do
+        it 'Order some researches' do
+          sign_in @user
+          @rese=Research.new(title: "Penna", item_id: 55, user_id: @user.id, price: 64, time: 5, feed:55, url: "www.prova.it", location: "Roma")
+          @rese.save
+          @resa=Research.new(title: "Astuccio", item_id: 5542, user_id: @user.id, price: 32, time: 5, feed:55, url: "www.prova.it", location: "Roma")
+          @resa.save
+          get :pordina, params: {user_id: @user.id}
+          expect(assigns(:presults)).to eq(assigns(:presults).sort_by(&:price).reverse)
+         end
+      end
+    end
+
+    after(:each) do
+      Research.all.each do |rela|
+    rela.destroy
+  end
+end
+
 end
 end

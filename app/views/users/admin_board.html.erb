@@ -69,25 +69,26 @@
               <% end %>
             </div>
             <div class="container">
-            <%= user.full_name %>
+                <%= user.full_name %>
                 <% if !user.admin? %>
                   <% if !user.moderator? %>
                   <%= link_to t("profilou"), user_path(id: user.id) %>
                   <%= link_to t("modmake"), set_mod_path(id: user.id) %>
       <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
                               
-                <% else %>
+                  <% else %>
                   <%= link_to t("modre"), remove_mod_path(id: user.id) %>
                   <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
-
+                  <% end %>
                 <% end %>
-              <% end %>
-            <% end %>
+                </div>
             </div>
           </li>
-        </ul>
-        </div>
-      </div>
+      <% end %>
+    </ul>
+  </div>
+</div>
+        
 
       <!-- Lingua e assistenza-->
       <div class="language-container">
@@ -98,8 +99,6 @@
           
         </div>
       </div>
-      </body>
-      </html>
 <%else %>
 
 <h1><%= "Moderator Board" %></h1>
@@ -152,7 +151,7 @@
     </div>
   </div>
 </div>
-    
+</div>    
 
 
 

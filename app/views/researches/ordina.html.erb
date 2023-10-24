@@ -81,10 +81,14 @@
 <div class="center-container"> 
 <h3><p><%= t("ricerche") %></p></h3>
 <% @results.each do |record| %>
-    <p><h4>%= "Titolo: "+record.title%></h4></p>
-    <p><%= "Luogo: "+record.location%></p>
-    <p><%= "Prezzo: "+record.price.to_s%></p>
-    <p><%= "Feed: "+record.feed.to_i.to_s%></p>
+    <h4><p><%= t("titolo")+record.title%></p></h4>
+    <p><%= t("luogo")+record.location%></p>
+    <p><%= t("price")+record.price.to_s%></p>
+    <p><%= t("feed")+record.feed.to_i.to_s%></p>
+    <% if current_user==record.user_id  || current_user.moderator? || current_user.admin?%>
+<%= link_to t("elimina") , user_research_path(record.user_id, record), data: {turbo_method: :delete, turbo_confirm:"Are you sure?"}%>
+<%= link_to t("vai"), record.url %>
+<%end%>
 <%end%>
 </div>
 <div class="right-container">

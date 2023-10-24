@@ -85,6 +85,10 @@
     <p><%= "Luogo: "+record.location%></p>
     <p><%= "Prezzo: "+record.price.to_s%></p>
     <p><%= "Feed: "+record.feed.to_i.to_s%></p>
+    <% if current_user==record.user_id  || current_user.moderator? || current_user.admin?%>
+<%= link_to t("elimina") , user_research_path(record.user_id, record), data: {turbo_method: :delete, turbo_confirm:"Are you sure?"}%>
+<%= link_to t("vai"), record.url %>
+<%end%>
 <%end%>
 </div>
 <div class="right-container">

@@ -11,10 +11,10 @@ class PagesController < ApplicationController
      @users = User.all
 	 if (current_user)
 	    @user=current_user
-		  categoria=@user.favorite_category
-		  if categoria && categoria!="nessuna categoria"
+		  @categoria=@user.favorite_category
+		  if @categoria && @categoria!="nessuna categoria"
 		    call = Caller.new
-        @search_results =call.find_by_category(categoria)
+        @search_results =call.find_by_category(@categoria)
 		  end
 	 end
   end

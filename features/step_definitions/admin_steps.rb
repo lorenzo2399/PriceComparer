@@ -93,7 +93,6 @@ end
 end
   
   When('i click on elimina review button') do
-    puts page.body
     click_link("Elimina", match: :first)
 end
     

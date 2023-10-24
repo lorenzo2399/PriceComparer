@@ -12,7 +12,9 @@
 
     .filter-container {
       float: right; 
-      width: 300px;
+      width: 230px;
+      text-align: right;
+
     }
   </style>
   <div style="flex: 1; text-align: right;">
@@ -26,7 +28,7 @@
       <%= link_to "Crea Account", new_user_registration_path %> 
     <% end %>
   </div> 
-  <h1> <p align="left"> PriceComparer</h1>
+  <h1> <p align="center"> PriceComparer</h1>
   
 </head>
 <body>
@@ -86,23 +88,29 @@
 
 
 
-  <div style="flex-basis: 300px;">
+  <!-- Filtri -->
+  <div class="filter-container">
     <%= form_tag(search_path, method: :get) do %>
-      <%= text_field_tag :keyword, params[:keyword], placeholder: t("cerca"), required: true %>
-	<%= submit_tag t("cerca"), style: "margin-left: 10px;" %> 
+      <div style="display: flex; align-items: center;">
+      <%= submit_tag t("cerca"), style: "margin-left: 2px;" %> 
+
+        <%= text_field_tag :keyword, params[:keyword], placeholder: t("cerca"), required: true %>
+      </div>
+      <div syle=""display: block;">
       <p><%= label_tag :minprice, t("pbasso") %></p>
-      <%= number_field_tag :minprice, params[:minprice], value: 1, min: 1 %>
+      <%= number_field_tag :minprice, params[:minprice], :value => 1, min: 1 %>
       <p><%= label_tag :maxprice, t("palto") %></p>
-      <%= number_field_tag :maxprice, params[:maxprice], value: 10000, max: 10000 %></p>
-      <%= label_tag :minf, t("fmin") %>
-      <p><%= number_field_tag :minf, params[:minf], value: 1, max: 100000 %></p>
+      <%= number_field_tag :maxprice, params[:maxprice], :value => 10000, max: 10000 %>
+      <p><%= label_tag :minf, t("fmin") %></p>
+      <p><%= number_field_tag :minf, params[:minf], :value => 1, max: 100000 %></p>
       <%= label_tag :instaexp, t("iexp") %>
       <%= check_box_tag "instaexp", 1, false %>
       <p><%= text_field_tag :place, params[:place], placeholder: t("place") %></p>
-      <%= label_tag :maxtime, t("tmax") %>
-      <p><%= number_field_tag :maxtime, params[:maxtime], value: 30, min: 1 %></p>
-     <%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"], ["Tempo", "Time"], ["Feedback", "Feed"]], params[:sort_order]), prompt: t("ordine") %>
-    <% end %>
+      <p><%= label_tag :maxtime, t("time") %></p>
+      <%= number_field_tag :maxtime, params[:maxtime], :value => 30, min: 1 %>
+      <%= select_tag :sort_order, options_for_select([[t("pbasso"), "PricePlusShippingLowest"], [t("palto"), "PricePlusShippingHighest"], ["Tempo", "Time"], ["Feedback", "Feed"]], params[:sort_order]), prompt: t("ordine") %>
+      </div>
+      </form>
   </div>
 </div>
 
@@ -124,3 +132,4 @@
 </div>
 </body>
 </html>
+<%end%>

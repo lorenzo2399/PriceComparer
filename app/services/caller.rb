@@ -128,9 +128,15 @@ XML
        )
     
     res=JSON.parse(response)
+    car=res["findItemsByKeywordsResponse"][0]
+    if car.key?("errorMessage")
+      res=[]
+      return res
+    else
     res=res["findItemsByKeywordsResponse"][0]["searchResult"][0]["item"]
     
     return res
+    end
     end
 
 end

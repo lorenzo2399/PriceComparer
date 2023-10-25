@@ -30,7 +30,11 @@
   <div style="flex: 1; text-align: right;">
     <%= link_to "Home", root_path %>
     
-   <% if current_user%>
+    <% if current_user!=@user%>
+    <%= link_to t("profilo"), user_path(current_user.id)%>
+    <%= link_to "Edit Account", edit_user_registration_path %>
+    <%= link_to "Logout", destroy_user_session_path, 'data-turbo-method': :delete%>  </div>
+<%else%>
     <%= link_to t("profilo"), user_path(@user.id)%>
     <%= link_to "Edit Account", edit_user_registration_path %>
     <%= link_to "Logout", destroy_user_session_path, 'data-turbo-method': :delete%>  </div>
@@ -69,9 +73,12 @@
   
 <% end %>
 
-<% if (current_user.moderator? || current_user.admin?) && @user != current_user %>
+<% if current_user.moderator?  &&  @user != current_user && !@user.admin? && !@user.moderator? %>
   <%= button_to t("elimina"), user_path(id: @user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
 <% end %>
+<% if  current_user.admin? %>
+<%= button_to t("elimina"), user_path(id: @user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+<%end%>
 <div class="container">
 <div class="left-container"> 
 <h3><%= t("recensioni") %></h3>

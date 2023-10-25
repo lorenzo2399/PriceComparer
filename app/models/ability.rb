@@ -32,18 +32,28 @@ if user.present?
 end
 
 if user.moderator?
-    can :read, User
-    can :destroy, User
-    can :destroy, Review
-    can :update, Review
-    can :read, Review
-    can :create, Review
-    can :create, Research
-    can :destroy, Research
-    can :read, Research
-    can :destroy, Message
-    can :admin_board, User
-    can :read, Message
+  can :read, User
+  can :destroy, User, role: [0]
+  can :destroy, Review do |rew|
+    user_r=User.find_by(id: rew.user_id)
+    user_r.role==0
+  end
+  can :update, Review do |rew|
+     user_r=User.find_by(id: rew.user_id)
+  user_r.role==0
+end
+  can :read, Review
+  can :create, Review
+  can :create, Research
+  can :destroy, Research do|res|
+  user_r=User.find_by(id: res.user_id)
+    user_r.role==0
+  end
+  
+  can :read, Research
+  can :destroy, Message
+  can :admin_board, User
+  can :read, Message
 
 end
 

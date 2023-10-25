@@ -79,6 +79,8 @@
       <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
                               
                   <% else %>
+                  <%= link_to t("profilom"), user_path(id: user.id) %>
+
                   <%= link_to t("modre"), remove_mod_path(id: user.id) %>
                   <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
                   <% end %>
@@ -115,37 +117,40 @@
  
 
 
-<div style=" justify-content: space-between; align-items: flex-start;">
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
   <div style="flex: 1;">
     <h1><%= t("utenti") %></h1>
-    
+    <ul>
       <% @users.each do |user| %>
         <li>
-        <div style="display: flex; align-items: center;">
-          <div style="margin-right: 10px;">
-            <% if user.moderator? %>
-              <strong>Moderatore:</strong>
-            <% elsif user.admin? %>
-              <strong>Admin:</strong>
-            <% else %>
-              <strong>Utente:</strong>
-            <% end %>
-          </div>
-          <div class="container">
-        <% if user.admin? %>
-           <%=user.full_name%>
-        
-           <% elsif !user.moderator? %>
-           <%= link_to t("profilou"), user_path(id: user.id) %>
-          <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
-          <% else %>
-            <%= t("mod") + " "+user.full_name %>
-          <% end %>
-        <% end %>
-    </div>
+          <div style="display: flex; align-items: center;">
+            <div style="margin-right: 10px;">
+              <% if user.moderator? %>
+                <strong>Moderatore:</strong>
+              <% elsif user.admin? %>
+                <strong>Admin:</strong>
+              <% else %>
+                <strong>Utente:</strong>
+              <% end %>
+            </div>
+            <div class="container">
+                <%= user.full_name %>
+                <% if !user.admin? %>
+                  <% if !user.moderator? %>
+                  <%= link_to t("profilou"), user_path(id: user.id) %>
+      <%= button_to t("elimina"), user_path(id: user.id), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+                              
+                  <% else %>
+                  <%= link_to t("profilom"), user_path(id: user.id) %>
+                  <% end %>
+                <% end %>
+                </div>
+            </div>
+          </li>
+      <% end %>
+    </ul>
   </div>
 </div>
-</div>    
 
 
 

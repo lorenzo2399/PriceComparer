@@ -3,13 +3,20 @@
 <head>
   <title>Home</title>
   <style>
-  <% if !current_user %>
-  body {
-  background-image: url('<%= asset_path('home.png') %>');
-  background-repeat: no-repeat;
-  background-position: center;
-  }
-  <%end%>
+  <% if !current_user%>  
+     body {
+     background-image: url('<%= asset_path('home.png') %>');
+     background-repeat: no-repeat;
+     background-position: center;
+	}
+     <%end%>
+    <% if current_user && (@user.favorite_category=="" || @user.favorite_category==nil)  %>
+     body {
+     background-image: url('<%= asset_path('home.png') %>');
+     background-repeat: no-repeat;
+     background-position: center;
+	}
+     <%end%>
     .language-container {
       display: flex;
       justify-content: flex-start;
@@ -61,10 +68,17 @@
             <h3><%= item["title"][0] %></h3>
             <p><%=image_tag 'ricerca.png'%></p>
             <p><%=t("price")%> <%= item["sellingStatus"][0]["currentPrice"][0]["__value__"] %> <%= item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] %></p>
-        <% end %>
+            <p><%= t("link") %> <%= link_to t("vai"), "https://www.ebay.it/" , target: '_blank' %></p>
+
+            <% end %>
       </ul>
     <% else %>
-      <p>Nessun risultato trovato.</p>
+          <% if current_user%>
+          <% if !@user.favorite_category.nil? && !@user.favorite_category.empty?%>
+            <p><%= t("nosuggestion")%></p>
+    
+          <%end%>
+          <%end%>
     <% end %>
   <%end%>
   </div>

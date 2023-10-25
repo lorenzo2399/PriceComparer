@@ -3,6 +3,13 @@
 <head>
   <title>Home</title>
   <style>
+  <% if !current_user %>
+  body {
+  background-image: url('<%= asset_path('home.png') %>');
+  background-repeat: no-repeat;
+  background-position: center;
+  }
+  <%end%>
     .language-container {
       display: flex;
       justify-content: flex-start;
